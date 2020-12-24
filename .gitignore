@@ -1,0 +1,14 @@
+.DS_Store
+build
+out
+.idea
+.gradle
+node_modules
+src/main/genjs/api
+src/main/genjs/core
+src/genjs
+src/gen
+tools
+Wallet
+logs
+FileTest
