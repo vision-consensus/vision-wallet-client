@@ -41,6 +41,15 @@ blockNumberStartToScan = 22690588 // NOTE: this field is optional
     $ cd build/libs
     $ java -jar vision-wallet-client.jar
     ```
+### Run wallet by the specified configuration file:  -dev as config-dev.conf ; the default is config.conf
+                                                                               
+- compile and run web wallet
+  ```console
+     $ cd vision-wallet-client
+     $ ./gradlew build
+     $ cd build/libs
+     $ java -jar vision-wallet-client.jar -dev
+     ```      
 
 ### Connect to java-vision-core
 
