@@ -125,7 +125,7 @@ run {
 
 
 shadowJar {
-    baseName = 'wallet-cli'
+    baseName = 'vision-wallet-client'
     classifier = null
     version = null
 }

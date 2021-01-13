@@ -13,6 +13,7 @@ import org.vision.common.utils.ByteArray;
 import org.vision.common.utils.ByteUtil;
 import org.vision.common.utils.Utils;
 import org.vision.core.config.Configuration;
+import org.vision.core.config.JCommanderConfigPath;
 import org.vision.core.exception.CipherException;
 import org.vision.core.exception.ZksnarkException;
 import org.vision.core.zen.address.KeyIo;
@@ -71,7 +72,7 @@ public class ShieldedVRC20Wrapper {
   private boolean loadShieldedStatus = false;
 
   static {
-    Config config = Configuration.getByPath("config.conf");
+    Config config = JCommanderConfigPath.getConfigPath();
     if (config.hasPath("blockNumberStartToScan")) {
       try {
         defaultBlockNumberToScan = config.getLong("blockNumberStartToScan");

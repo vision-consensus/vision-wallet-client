@@ -9,6 +9,7 @@ import org.vision.common.crypto.SignInterface;
 import org.vision.common.crypto.sm2.SM2;
 import org.vision.common.utils.Utils;
 import org.vision.core.config.Configuration;
+import org.vision.core.config.JCommanderConfigPath;
 import org.vision.core.exception.CipherException;
 
 import java.io.File;
@@ -29,7 +30,7 @@ public class WalletUtils {
   private static boolean isEckey = true;
 
   static {
-    Config config = Configuration.getByPath("config.conf");//it is needs set to be a constant
+    Config config = JCommanderConfigPath.getConfigPath();//it is needs set to be a constant
     objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     if (config.hasPath("crypto.engine")) {

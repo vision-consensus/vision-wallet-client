@@ -29,6 +29,7 @@ import org.vision.common.utils.AbiUtil;
 import org.vision.common.utils.ByteArray;
 import org.vision.common.utils.ByteUtil;
 import org.vision.common.utils.Utils;
+import org.vision.core.config.JCommanderConfigPath;
 import org.vision.core.exception.CancelException;
 import org.vision.core.exception.CipherException;
 import org.vision.core.exception.EncodingException;
@@ -4319,11 +4320,17 @@ public class Client {
 
   public static void main(String[] args) {
     Client cli = new Client();
+    JCommanderConfigPath jCommanderExample = new JCommanderConfigPath();
+    if (args.length>0&&args[0].equals("-dev")){
+      args= new String[]{"-dev","config-dev.conf"};
+    }else {
+      args = new String[]{"-local","config.conf"};
+    }
     JCommander.newBuilder()
-        .addObject(cli)
-        .build()
-        .parse(args);
-
+            .addObject(cli)
+            .addObject(jCommanderExample)
+            .build()
+            .parse(args);
     cli.run();
   }
 }

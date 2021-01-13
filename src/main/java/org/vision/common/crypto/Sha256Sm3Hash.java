@@ -36,6 +36,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import org.vision.common.utils.ByteArray;
 import org.vision.core.config.Configuration;
+import org.vision.core.config.JCommanderConfigPath;
 
 
 /**
@@ -52,7 +53,7 @@ public class Sha256Sm3Hash implements Serializable, Comparable<Sha256Sm3Hash> {
   private static boolean isEckey = true;
 
   static {
-    Config config = Configuration.getByPath("config.conf"); // it is needs set to be a constant
+    Config config = JCommanderConfigPath.getConfigPath(); // it is needs set to be a constant
     if (config.hasPath("crypto.engine")) {
       isEckey = config.getString("crypto.engine").equalsIgnoreCase("eckey");
       System.out.println("Sha256Sm3Hash getConfig isEckey: " + isEckey);

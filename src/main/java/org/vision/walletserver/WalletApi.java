@@ -74,6 +74,7 @@ import org.vision.common.utils.ByteArray;
 import org.vision.common.utils.TransactionUtils;
 import org.vision.common.utils.Utils;
 import org.vision.core.config.Configuration;
+import org.vision.core.config.JCommanderConfigPath;
 import org.vision.core.exception.CancelException;
 import org.vision.core.exception.CipherException;
 import org.vision.core.config.Parameter;
@@ -162,8 +163,7 @@ public class WalletApi {
   private static GrpcClient rpcCli = init();
 
   public static GrpcClient init() {
-    Config config = Configuration.getByPath("config.conf");
-
+    Config config = JCommanderConfigPath.getConfigPath();
     String fullNode = "";
     String solidityNode = "";
     if (config.hasPath("soliditynode.ip.list")) {
