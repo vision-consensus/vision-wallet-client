@@ -4321,8 +4321,8 @@ public class Client {
   public static void main(String[] args) {
     Client cli = new Client();
     JCommanderConfigPath jCommanderExample = new JCommanderConfigPath();
-    if (args.length>0&&args[0].equals("-dev")){
-      args= new String[]{"-dev","config-dev.conf"};
+    if (args.length>0&&args[0].equals("-c")){
+      args= new String[]{"-c","config-dev.conf"};
     }else {
       args = new String[]{"-local","config.conf"};
     }

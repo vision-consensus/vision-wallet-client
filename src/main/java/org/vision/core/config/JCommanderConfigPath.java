@@ -7,7 +7,7 @@ import org.vision.core.config.Configuration;
 
 public class JCommanderConfigPath {
 
-    @Parameter(names = "-dev", description = "dev path of config")
+    @Parameter(names = "-c", description = "dev path of config")
     public static String devPath ;
 
     @Parameter(names = "-local", description = "local path of config")
