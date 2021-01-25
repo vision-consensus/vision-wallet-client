@@ -281,8 +281,8 @@ public class WalletApiWrapper {
     builder.setVoteScore(voteScore);
     builder.setDescription(ByteString.copyFrom(description.getBytes()));
     builder.setUrl(ByteString.copyFrom(url.getBytes()));
-    builder.setFreeAssetNetLimit(freeNetLimit);
-    builder.setPublicFreeAssetNetLimit(publicFreeNetLimit);
+    builder.setFreeAssetPhotonLimit(freeNetLimit);
+    builder.setPublicFreeAssetPhotonLimit(publicFreeNetLimit);
 
     for (String daysStr : frozenSupply.keySet()) {
       String amountStr = frozenSupply.get(daysStr);
@@ -674,15 +674,15 @@ public class WalletApiWrapper {
 
   }
 
-  public boolean updateEnergyLimit(byte[] ownerAddress, byte[] contractAddress,
-      long originEnergyLimit)
+  public boolean updateEntropyLimit(byte[] ownerAddress, byte[] contractAddress,
+      long originEntropyLimit)
       throws CipherException, IOException, CancelException {
     if (wallet == null || !wallet.isLoginState()) {
       System.out.println("Warning: updateSetting failed,  Please login first !!");
       return false;
     }
 
-    return wallet.updateEnergyLimit(ownerAddress, contractAddress, originEnergyLimit);
+    return wallet.updateEntropyLimit(ownerAddress, contractAddress, originEntropyLimit);
   }
 
   public boolean clearContractABI(byte[] ownerAddress, byte[] contractAddress)
@@ -695,7 +695,7 @@ public class WalletApiWrapper {
   }
 
   public boolean deployContract(byte[] ownerAddress, String name, String abiStr, String codeStr,
-      long feeLimit, long value, long consumeUserResourcePercent, long originEnergyLimit,
+      long feeLimit, long value, long consumeUserResourcePercent, long originEntropyLimit,
       long tokenValue, String tokenId, String libraryAddressPair, String compilerVersion)
       throws CipherException, IOException, CancelException {
     if (wallet == null || !wallet.isLoginState()) {
@@ -705,7 +705,7 @@ public class WalletApiWrapper {
     return wallet
         .deployContract(ownerAddress, name, abiStr, codeStr, feeLimit, value,
             consumeUserResourcePercent,
-            originEnergyLimit, tokenValue, tokenId,
+            originEntropyLimit, tokenValue, tokenId,
             libraryAddressPair, compilerVersion);
   }
 

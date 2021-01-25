@@ -68,7 +68,7 @@ For more information on a specific command, just type the command on terminal wh
 | [DeleteProposal](#Cancel-the-created-proposal) | [DeployContract](#How-to-use-smart-contract) | [ExchangeCreate](#How-to-trade-on-the-exchange) |
 | [ExchangeInject](#How-to-trade-on-the-exchange) | [ExchangeTransaction](#How-to-trade-on-the-exchange) | [ExchangeWithdraw](#How-to-trade-on-the-exchange) |
 | [FreezeBalance](#How-to-delegate-resourcee) | [GenerateAddress](#Account-related-commands) | [GenerateShieldedVRC20Address](#How-to-transfer-shielded-VRC20-token)|
-| [GetAccount](#Account-related-commands) |[GetAccountNet](#Account-related-commands) | [GetAccountResource](#Account-related-commands) | 
+| [GetAccount](#Account-related-commands) |[GetAccountPhoton](#Account-related-commands) | [GetAccountResource](#Account-related-commands) | 
 | [GetAddress](#Account-related-commands) | [GetAkFromAsk](#How-to-transfer-shielded-VRC20-token) |[GetAssetIssueByAccount](#How-to-issue-VRC10-tokens) | 
 | [GetAssetIssueById](#How-to-issue-VRC10-tokens) | [GetAssetIssueByName](#How-to-issue-VRC10-tokens) |[GetAssetIssueListByName](#How-to-issue-VRC10-tokens) | 
 | [GetBalance](#Account-related-commands) | [GetBlock](#How-to-get-block-information) |[GetBlockById](#How-to-get-block-information) | 
@@ -91,21 +91,21 @@ For more information on a specific command, just type the command on terminal wh
 | [SendShieldedVRC20Coin](#How-to-transfer-shielded-VRC20-token) | [SendShieldedVRC20CoinWithoutAsk](#How-to-transfer-shielded-VRC20-token) | [SetShieldedVRC20ContractAddress](#How-to-transfer-shielded-VRC20-token) | 
 | [ShowShieldedVRC20AddressInfo](#How-to-transfer-shielded-VRC20-token) | [TransferAsset](#How-to-issue-VRC10-tokens) | [TriggerContract](#How-to-use-smart-contracts) |
 | [UnfreezeAsset](#How-to-issue-VRC10-tokens) | [UnfreezeBalance](#How-to-delegate-resource) |[UpdateAsset](#How-to-issue-VRC10-tokens) | 
-| [UpdateBrokerage](#Brokerage) | [UpdateEnergyLimit](#How-to-use-smart-contracts) |[UpdateSetting](#How-to-use-smart-contracts) | 
+| [UpdateBrokerage](#Brokerage) | [UpdateEntropyLimit](#How-to-use-smart-contracts) |[UpdateSetting](#How-to-use-smart-contracts) | 
 | [UpdateAccountPermission](#How-to-use-the-multi-signature-feature-of-vision-wallet-client) | [VoteWitness](#How-to-vote) |
 
 Type any one of the listed commands, to display how-to tips.
 
 ## How to freeze/unfreeze balance
 
-After the funds are frozen, the corresponding number of shares and bandwidth will be obtained.
-Shares can be used for voting and bandwidth can be used for trading.
-The rules for the use and calculation of share and bandwidth are described later in this article.
+After the funds are frozen, the corresponding number of shares and photon will be obtained.
+Shares can be used for voting and photon can be used for trading.
+The rules for the use and calculation of share and photon are described later in this article.
 
 **Freeze operation is as follows:**
 
 ```console
-> freezeBalance [OwnerAddress] frozen_balance frozen_duration [ResourceCode:0 BANDWIDTH, 1 ENERGY] [receiverAddress]
+> freezeBalance [OwnerAddress] frozen_balance frozen_duration [ResourceCode:0 PHOTON, 1 ENTROPY] [receiverAddress]
 ```
 
 OwnerAddress
@@ -128,7 +128,7 @@ After the freeze operation, frozen funds will be transferred from Account Balanc
 You can view frozen funds from your account information.
 After being unfrozen, it is transferred back to Balance by Frozen, and the frozen funds cannot be used for trading.
 
-When more share or bandwidth is needed temporarily, additional funds may be frozen to obtain additional share and bandwidth.
+When more share or photon is needed temporarily, additional funds may be frozen to obtain additional share and photon.
 The unfrozen time is postponed until 3 days after the last freeze operation
 
 After the freezing time expires, funds can be unfroze.
@@ -136,7 +136,7 @@ After the freezing time expires, funds can be unfroze.
 **Unfreeze operation is as follows:**
 
 ```console
-> unfreezeBalance [OwnerAddress] ResourceCode(0 BANDWIDTH, 1 CPU) [receiverAddress]
+> unfreezeBalance [OwnerAddress] ResourceCode(0 PHOTON, 1 CPU) [receiverAddress]
 ```
 
 ## How to vote
@@ -206,21 +206,21 @@ For example:
 > updateBrokerage VkHoxn1142S7t11uks5RdjHGV1pM7wKc 30
 ```
 
-## How to calculate bandwidth
+## How to calculate photon
 
-The bandwidth calculation rule is:
+The photon calculation rule is:
 
     constant * FrozenFunds * days
 
-Assuming freeze 1VS（1_000_000 Vdt), 3 days, bandwidth obtained = 1 * 1_000_000 * 3 = 3_000_000.
+Assuming freeze 1VS（1_000_000 Vdt), 3 days, photon obtained = 1 * 1_000_000 * 3 = 3_000_000.
 
-All contracts consume bandwidth, including transferring, transferring of assets, voting, freezing, etc.
-Querying does not consume bandwidth. Each contract needs to consume **100_000 bandwidth**.
+All contracts consume photon, including transferring, transferring of assets, voting, freezing, etc.
+Querying does not consume photon. Each contract needs to consume **100_000 photon**.
 
-If a contract exceeds a certain time (**10s**), this operation does not consume bandwidth.
+If a contract exceeds a certain time (**10s**), this operation does not consume photon.
 
-When the unfreezing operation occurs, the bandwidth is not cleared.
-The next time the freeze is performed, the newly added bandwidth is accumulated.
+When the unfreezing operation occurs, the photon is not cleared.
+The next time the freeze is performed, the newly added photon is accumulated.
 
 ## How to withdraw balance
 
@@ -272,7 +272,7 @@ Each account can only issue **ONE** VRC10 token.
 
 ### Issue VRC10 tokens
 
-    > AssetIssue [OwnerAddress] AssetName AbbrName TotalSupply TrxNum AssetNum Precision StartDate EndDate Description Url FreeNetLimitPerAccount PublicFreeNetLimit FrozenAmount0 FrozenDays0 [...] FrozenAmountN FrozenDaysN
+    > AssetIssue [OwnerAddress] AssetName AbbrName TotalSupply TrxNum AssetNum Precision StartDate EndDate Description Url FreePhotonLimitPerAccount PublicFreePhotonLimit FrozenAmount0 FrozenDays0 [...] FrozenAmountN FrozenDaysN
 
 OwnerAddress (optional)
 > The address of the account which initiated the transaction. 
@@ -299,11 +299,11 @@ TrxNum, AssetNum
 Precision
 > Precision to how many decimal places  
 
-FreeNetLimitPerAccount
-> The maximum amount of bandwidth each account is allowed to use. Token issuers can freeze VS to obtain bandwidth (TransferAssetContract only)
+FreePhotonLimitPerAccount
+> The maximum amount of photon each account is allowed to use. Token issuers can freeze VS to obtain photon (TransferAssetContract only)
 
-PublicFreeNetLimit
-> The maximum total amount of bandwidth which is allowed to use for all accounts. Token issuers can freeze VS to obtain bandwidth (TransferAssetContract only)
+PublicFreePhotonLimit
+> The maximum total amount of photon which is allowed to use for all accounts. Token issuers can freeze VS to obtain photon (TransferAssetContract only)
 
 StartDate, EndDate
 > The start and end date of token issuance. Within this period time, other users can participate in token issuance.
@@ -342,8 +342,8 @@ Example:
             "end_time": 1594396800000,
             "description": "just for test121212",
             "url": "www.test.com",
-            "free_asset_net_limit": 100,
-            "public_free_asset_net_limit": 100000,
+            "free_asset_photon_limit": 100,
+            "public_free_asset_photon_limit": 100000,
             "id": "1000001"
         }
     ]
@@ -385,8 +385,8 @@ Example:
             "end_time": 1594396800000,
             "description": "change description",
             "url": "www.changetest.com",
-            "free_asset_net_limit": 1000,
-            "public_free_asset_net_limit": 1000000,
+            "free_asset_photon_limit": 1000,
+            "public_free_asset_photon_limit": 1000000,
             "id": "1000001"
         }
     ]
@@ -422,7 +422,7 @@ address: VQes8rK7fCj4gpKOf2SqGJc1V61mnkRRTH
     id: 1000001
     balance: 1000
     latest_asset_operation_timeV2: null
-    free_asset_net_usageV2: 0
+    free_asset_Photon_usageV2: 0
     }
 ```
 
@@ -457,7 +457,7 @@ assetV2
     id: 1000001
     balance: 1000
     latest_asset_operation_timeV2: null
-    free_asset_net_usageV2: 0
+    free_asset_photon_usageV2: 0
     }
 ```
 
@@ -878,7 +878,7 @@ The information displays as follows:
 
 ### deploy smart contracts
 
-    > DeployContract [ownerAddress] contractName ABI byteCode constructor params isHex fee_limit consume_user_resource_percent origin_energy_limit value token_value token_id(e.g: VSTOKEN, use # if don't provided) <library:address,library:address,...> <lib_compiler_version(e.g:v5)> library:address,...>
+    > DeployContract [ownerAddress] contractName ABI byteCode constructor params isHex fee_limit consume_user_resource_percent origin_entropy_limit value token_value token_id(e.g: VSTOKEN, use # if don't provided) <library:address,library:address,...> <lib_compiler_version(e.g:v5)> library:address,...>
 
 OwnerAddress
 > The address of the account that initiated the transaction, optional, default is the address of the login account.
@@ -901,8 +901,8 @@ fee_limit
 consume_user_resource_percent
 > Percentage of user resource consumed, in the range [0, 100]
 
-origin_energy_limit
-> The most amount of developer Energy consumed by trigger contract once
+origin_entropy_limit
+> The most amount of developer Entropy consumed by trigger contract once
 
 value
 > The amount of VS transferred to the contract account
@@ -934,9 +934,9 @@ Get the result of the contract execution with the getTransactionInfoById command
     ],
     "contract_address": "VyjMkZxPe2CQsLaxxeCFLdnpUDsPHsbfTT",
     "receipt": {
-        "energy_fee": 6170500,
-        "energy_usage_total": 61705,
-        "net_usage": 704,
+        "entropy_fee": 6170500,
+        "entropy_usage_total": 61705,
+        "photon_usage": 704,
         "result": "SUCCESS"
     }
 }
@@ -987,9 +987,9 @@ Example:
     ],
     "contract_address": "VyjMkZxPe2CQsLaxxeCFLdnpUDsPHsbfTT",
     "receipt": {
-        "energy_fee": 8500,
-        "energy_usage_total": 85,
-        "net_usage": 314,
+        "entropy_fee": 8500,
+        "entropy_usage_total": 85,
+        "photon_usage": 314,
         "result": "REVERT"
     },
     "result": "FAILED",
@@ -1035,21 +1035,21 @@ Example:
     "bytecode": "608060405234801561001057600080fd5b50610134806100206000396000f3006080604052600436106100405763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663329000b58114610045575b600080fd5b34801561005157600080fd5b5061005d60043561006f565b60408051918252519081900360200190f35b604080516003808252608082019092526000916060919060208201838038833901905050905060018160008151811015156100a657fe5b602090810290910101528051600290829060019081106100c257fe5b602090810290910101528051600390829060029081106100de57fe5b6020908102909101015280518190849081106100f657fe5b906020019060200201519150509190505600a165627a7a72305820b24fc247fdaf3644b3c4c94fcee380aa610ed83415061ff9e65d7fa94a5a50a00029",
     "consume_user_resource_percent": 75,
     "name": "normalcontract544",
-    "origin_energy_limit": 50000,
+    "origin_entropy_limit": 50000,
     "code_hash": "23423cece3b4866263c15357b358e5ac261c218693b862bcdb90fa792d5714e6"
 }
 ```
 
 ### update smart contract parameters
 
-    > UpdateEnergyLimit [ownerAddress] contract_address energy_limit  # Update parameter energy_limit
+    > UpdateEntropyLimit [ownerAddress] contract_address entropy_limit  # Update parameter entropy_limit
     > UpdateSetting [ownerAddress] contract_address consume_user_resource_percent  # Update parameter consume_user_resource_percent
 
 ## How to delegate resource
 
 ### delegate resource
 
-    > freezeBalance [OwnerAddress] frozen_balance frozen_duration [ResourceCode:0 BANDWIDTH, 1 ENERGY] [receiverAddress]
+    > freezeBalance [OwnerAddress] frozen_balance frozen_duration [ResourceCode:0 PHOTON, 1 ENTROPY] [receiverAddress]
 
 The latter two parameters are optional parameters. If not set, the VS is frozen to obtain
 resources for its own use; if it is not empty, the acquired resources are used by receiverAddress.
@@ -1064,16 +1064,16 @@ frozen_duration
 > frezen duration, 3 days
 
 ResourceCode
-> 0 BANDWIDTH;1 ENERGY
+> 0 PHOTON;1 ENTROPY
 
 receiverAddress
 > target account address
 
 ### unfreeze delegated resource
 
-    > unfreezeBalance [OwnerAddress] ResourceCode(0 BANDWIDTH, 1 CPU) [receiverAddress]
+    > unfreezeBalance [OwnerAddress] ResourceCode(0 PHOTON, 1 CPU) [receiverAddress]
 
-The latter two parameters are optional. If they are not set, the BANDWIDTH resource is unfreeze
+The latter two parameters are optional. If they are not set, the PHOTON resource is unfreeze
 by default; when the receiverAddress is set, the delegate resources are unfreezed.
 
 
@@ -1114,11 +1114,11 @@ as: 721d63b074f18d41c147e04c952ec93467777a30b6f16745bc47a8eae5076545
 **GetAccount**
 > Get account information based on address
 
-**GetAccountNet**
-> The usage of bandwidth
+**GetAccountPhoton**
+> The usage of photon
 
 **GetAccountResource**
-> The usage of bandwidth and energy
+> The usage of photon and entropy
 
 **GetAddress**
 > Get the address of the current login account
@@ -2184,7 +2184,7 @@ getTransactionInfoById 10040f993cd9452b25bf367f38edadf11176355802baf61f3c49b96b4
 		""
 	],
 	"receipt": {
-		"net_usage": 264
+		"photon_usage": 264
 	}
 } 
 ```
@@ -2346,7 +2346,7 @@ getTransactionInfoById b375787a098498623403c755b1399e82910385251b643811936d914c9
 		""
 	],
 	"receipt": {
-		"net_usage": 283
+		"photon_usage": 283
 	}
 }
 ```

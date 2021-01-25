@@ -83,7 +83,7 @@ public class Client {
       "CreateProposal",
       "CreateWitness",
       "DeleteProposal",
-      "DeployContract contractName ABI byteCode constructor params isHex fee_limit consume_user_resource_percent origin_energy_limit value token_value token_id <library:address,library:address,...> <lib_compiler_version(e.g:v5)>",
+      "DeployContract contractName ABI byteCode constructor params isHex fee_limit consume_user_resource_percent origin_entropy_limit value token_value token_id <library:address,library:address,...> <lib_compiler_version(e.g:v5)>",
       "ExchangeCreate",
       "ExchangeInject",
       "ExchangeTransaction",
@@ -93,7 +93,7 @@ public class Client {
       // "GenerateShieldedAddress",
       "GenerateShieldedVRC20Address",
       "GetAccount",
-      "GetAccountNet",
+      "GetAccountPhoton",
       "GetAccountResource",
       "GetAddress",
       "GetAkFromAsk",
@@ -189,7 +189,7 @@ public class Client {
       "UpdateAccountPermission",
       "UpdateAsset",
       "UpdateBrokerage",
-      "UpdateEnergyLimit contract_address energy_limit",
+      "UpdateEntropyLimit contract_address entropy_limit",
       "UpdateSetting contract_address consume_user_resource_percent",
       "UpdateWitness",
       "VoteWitness",
@@ -223,7 +223,7 @@ public class Client {
       // "GenerateShieldedAddress",
       "GenerateShieldedVRC20Address",
       "GetAccount",
-      "GetAccountNet",
+      "GetAccountPhoton",
       "GetAccountResource",
       "GetAddress",
       "GetAkFromAsk",
@@ -319,7 +319,7 @@ public class Client {
       "UpdateAccountPermission",
       "UpdateAsset",
       "UpdateBrokerage",
-      "UpdateEnergyLimit",
+      "UpdateEntropyLimit",
       "UpdateSetting",
       "UpdateWitness",
       "VoteWitness",
@@ -660,10 +660,10 @@ public class Client {
     }
   }
 
-  private void getAccountNet(String[] parameters) {
+  private void getAccountPhoton(String[] parameters) {
     if (parameters == null || parameters.length != 1) {
-      System.out.println("GetAccountNet needs 1 parameter like following: ");
-      System.out.println("GetAccountNet Address ");
+      System.out.println("GetAccountPhoton needs 1 parameter like following: ");
+      System.out.println("GetAccountPhoton Address ");
       return;
     }
     String address = parameters[0];
@@ -672,9 +672,9 @@ public class Client {
       return;
     }
 
-    AccountNetMessage result = WalletApi.getAccountNet(addressBytes);
+    AccountPhotonMessage result = WalletApi.getAccountPhoton(addressBytes);
     if (result == null) {
-      System.out.println("GetAccountNet failed !!");
+      System.out.println("GetAccountPhoton failed !!");
     } else {
       System.out.println(Utils.formatMessageString(result));
     }
@@ -868,7 +868,7 @@ public class Client {
     if (parameters == null || parameters.length < 12) {
       System.out.println("Use the assetIssue command for features that you require with below syntax: ");
       System.out.println("AssetIssue [OwnerAddress] AssetName AbbrName TotalSupply VsNum AssetNum Precision "
-              + "StartDate EndDate Description Url FreeNetLimitPerAccount PublicFreeNetLimit "
+              + "StartDate EndDate Description Url FreePhotonLimitPerAccount PublicFreePhotonLimit "
               + "FrozenAmount0 FrozenDays0 ... FrozenAmountN FrozenDaysN");
       System.out.println("VsNum and AssetNum represents the conversion ratio of the vison to the asset.");
       System.out.println("The StartDate and EndDate format should look like 2018-03-01 2018-03-21 .");
@@ -895,8 +895,8 @@ public class Client {
     String endYyyyMmDd = parameters[index++];
     String description = parameters[index++];
     String url = parameters[index++];
-    String freeNetLimitPerAccount = parameters[index++];
-    String publicFreeNetLimitString = parameters[index++];
+    String freePhotonLimitPerAccount = parameters[index++];
+    String publicFreePhotonLimitString = parameters[index++];
     HashMap<String, String> frozenSupply = new HashMap<>();
     while (index < parameters.length) {
       String amount = parameters[index++];
@@ -917,12 +917,12 @@ public class Client {
     }
     long startTime = startDate.getTime();
     long endTime = endDate.getTime();
-    long freeAssetNetLimit = new Long(freeNetLimitPerAccount);
-    long publicFreeNetLimit = new Long(publicFreeNetLimitString);
+    long freeAssetPhotonLimit = new Long(freePhotonLimitPerAccount);
+    long publicFreePhotonLimit = new Long(publicFreePhotonLimitString);
 
     boolean result = walletApiWrapper.assetIssue(ownerAddress, name, abbrName, totalSupply,
         vsNum, icoNum, precision, startTime, endTime, 0,
-        description, url, freeAssetNetLimit, publicFreeNetLimit, frozenSupply);
+        description, url, freeAssetPhotonLimit, publicFreePhotonLimit, frozenSupply);
     if (result) {
       System.out.println("AssetIssue " + name + " successful !!");
     } else {
@@ -1197,7 +1197,7 @@ public class Client {
         || parameters.length == 4 || parameters.length == 5)) {
       System.out.println("Use freezeBalance command with below syntax: ");
       System.out.println("freezeBalance [OwnerAddress] frozen_balance frozen_duration "
-          + "[ResourceCode:0 BANDWIDTH,1 ENERGY] [receiverAddress]");
+          + "[ResourceCode:0 PHOTON,1 ENTROPY] [receiverAddress]");
       return;
     }
 
@@ -1240,7 +1240,7 @@ public class Client {
     if (parameters == null || parameters.length < 1 || parameters.length > 3) {
       System.out.println("Use unfreezeBalance command with below syntax: ");
       System.out.println(
-          "unfreezeBalance [OwnerAddress] ResourceCode(0 BANDWIDTH,1 CPU) [receiverAddress]");
+          "unfreezeBalance [OwnerAddress] ResourceCode(0 PHOTON,1 CPU) [receiverAddress]");
       return;
     }
 
@@ -1884,11 +1884,11 @@ public class Client {
     }
   }
 
-  private void updateEnergyLimit(String[] parameters)
+  private void updateEntropyLimit(String[] parameters)
       throws IOException, CipherException, CancelException {
     if (parameters == null || (parameters.length != 2 && parameters.length != 3)) {
-      System.out.println("Using updateEnergyLimit command needs 2 parameters like: ");
-      System.out.println("updateEnergyLimit [OwnerAddress] contract_address energy_limit");
+      System.out.println("Using updateEntropyLimit command needs 2 parameters like: ");
+      System.out.println("updateEntropyLimit [OwnerAddress] contract_address entropy_limit");
       return;
     }
 
@@ -1908,17 +1908,17 @@ public class Client {
       return;
     }
 
-    long originEnergyLimit = Long.valueOf(parameters[index++]).longValue();
-    if (originEnergyLimit < 0) {
-      System.out.println("origin_energy_limit need > 0 ");
+    long originEntropyLimit = Long.valueOf(parameters[index++]).longValue();
+    if (originEntropyLimit < 0) {
+      System.out.println("origin_entropy_limit need > 0 ");
       return;
     }
     boolean result = walletApiWrapper
-        .updateEnergyLimit(ownerAddress, contractAddress, originEnergyLimit);
+        .updateEntropyLimit(ownerAddress, contractAddress, originEntropyLimit);
     if (result) {
-      System.out.println("UpdateSetting for origin_energy_limit successful !!!");
+      System.out.println("UpdateSetting for origin_entropy_limit successful !!!");
     } else {
-      System.out.println("UpdateSetting for origin_energy_limit failed !!!");
+      System.out.println("UpdateSetting for origin_entropy_limit failed !!!");
     }
   }
 
@@ -2082,7 +2082,7 @@ public class Client {
         parameters.length < 11) {
       System.out.println("Using deployContract needs at least 11 parameters like: ");
       System.out.println(
-          "DeployContract [ownerAddress] contractName ABI byteCode constructor params isHex fee_limit consume_user_resource_percent origin_energy_limit value token_value token_id(e.g: TRXTOKEN, use # if don't provided) <library:address,library:address,...> <lib_compiler_version(e.g:v5)>");
+          "DeployContract [ownerAddress] contractName ABI byteCode constructor params isHex fee_limit consume_user_resource_percent origin_entropy_limit value token_value token_id(e.g: TRXTOKEN, use # if don't provided) <library:address,library:address,...> <lib_compiler_version(e.g:v5)>");
 //      System.out.println(
 //          "Note: Please append the param for constructor tightly with byteCode without any space");
       return;
@@ -2102,13 +2102,13 @@ public class Client {
     boolean isHex = Boolean.parseBoolean(parameters[idx++]);
     long feeLimit = Long.parseLong(parameters[idx++]);
     long consumeUserResourcePercent = Long.parseLong(parameters[idx++]);
-    long originEnergyLimit = Long.parseLong(parameters[idx++]);
+    long originEntropyLimit = Long.parseLong(parameters[idx++]);
     if (consumeUserResourcePercent > 100 || consumeUserResourcePercent < 0) {
       System.out.println("consume_user_resource_percent should be >= 0 and <= 100");
       return;
     }
-    if (originEnergyLimit <= 0) {
-      System.out.println("origin_energy_limit must > 0");
+    if (originEntropyLimit <= 0) {
+      System.out.println("origin_entropy_limit must > 0");
       return;
     }
     if (!constructorStr.equals("#")) {
@@ -2141,7 +2141,7 @@ public class Client {
      */
     boolean result = walletApiWrapper
         .deployContract(ownerAddress, contractName, abiStr, codeStr, feeLimit, value,
-            consumeUserResourcePercent, originEnergyLimit, tokenValue, tokenId, libraryAddressPair,
+            consumeUserResourcePercent, originEntropyLimit, tokenValue, tokenId, libraryAddressPair,
             compilerVersion);
     if (result) {
       System.out.println("Broadcast the createSmartContract successful.\n"
@@ -3859,8 +3859,8 @@ public class Client {
               getAssetIssueByAccount(parameters);
               break;
             }
-            case "getaccountnet": {
-              getAccountNet(parameters);
+            case "getaccountphoton": {
+              getAccountPhoton(parameters);
               break;
             }
             case "getaccountresource": {
@@ -4083,8 +4083,8 @@ public class Client {
               updateSetting(parameters);
               break;
             }
-            case "updateenergylimit": {
-              updateEnergyLimit(parameters);
+            case "updateentropylimit": {
+              updateEntropyLimit(parameters);
               break;
             }
             case "deploycontract": {

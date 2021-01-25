@@ -104,8 +104,8 @@ service Wallet {
   rpc UpdateSetting (UpdateSettingContract) returns (TransactionExtention) {
   };
 
-  //modify the energy_limit
-  rpc UpdateEnergyLimit (UpdateEnergyLimitContract) returns (TransactionExtention) {
+  //modify the entropy_limit
+  rpc UpdateEntropyLimit (UpdateEntropyLimitContract) returns (TransactionExtention) {
   };
 
   //Use this function instead of VoteWitnessAccount.
@@ -327,12 +327,12 @@ service Wallet {
       }
     };
   }
-  rpc GetAccountNet (Account) returns (AccountNetMessage) {
+  rpc GetAccountPhoton (Account) returns (AccountPhotonMessage) {
     option (google.api.http) = {
-        post: "/wallet/getaccountnet"
+        post: "/wallet/getaccountphoton"
         body: "*"
         additional_bindings {
-          get: "/wallet/getaccountnet"
+          get: "/wallet/getaccountphoton"
         }
       };
   };
@@ -1005,7 +1005,7 @@ message Return {
     SIGERROR = 1; // error in signature
     CONTRACT_VALIDATE_ERROR = 2;
     CONTRACT_EXE_ERROR = 3;
-    BANDWITH_ERROR = 4;
+    PHOTON_ERROR = 4;
     DUP_TRANSACTION_ERROR = 5;
     TAPOS_ERROR = 6;
     TOO_BIG_TRANSACTION_ERROR = 7;
@@ -1104,30 +1104,30 @@ message TimePaginatedMessage {
   int64 limit = 3;
 }
 //deprecated
-message AccountNetMessage {
-  int64 freeNetUsed = 1;
-  int64 freeNetLimit = 2;
-  int64 NetUsed = 3;
-  int64 NetLimit = 4;
-  map<string, int64> assetNetUsed = 5;
-  map<string, int64> assetNetLimit = 6;
-  int64 TotalNetLimit = 7;
-  int64 TotalNetWeight = 8;
+message AccountPhotonMessage {
+  int64 freePhotonUsed = 1;
+  int64 freePhotonLimit = 2;
+  int64 PhotonUsed = 3;
+  int64 PhotonLimit = 4;
+  map<string, int64> assetPhotonUsed = 5;
+  map<string, int64> assetPhotonLimit = 6;
+  int64 TotalPhotonLimit = 7;
+  int64 TotalPhotonWeight = 8;
 }
 message AccountResourceMessage {
-  int64 freeNetUsed = 1;
-  int64 freeNetLimit = 2;
-  int64 NetUsed = 3;
-  int64 NetLimit = 4;
-  map<string, int64> assetNetUsed = 5;
-  map<string, int64> assetNetLimit = 6;
-  int64 TotalNetLimit = 7;
-  int64 TotalNetWeight = 8;
+  int64 freePhotonUsed = 1;
+  int64 freePhotonLimit = 2;
+  int64 PhotonUsed = 3;
+  int64 PhotonLimit = 4;
+  map<string, int64> assetPhotonUsed = 5;
+  map<string, int64> assetPhotonLimit = 6;
+  int64 TotalPhotonLimit = 7;
+  int64 TotalPhotonWeight = 8;
 
-  int64 EnergyUsed = 13;
-  int64 EnergyLimit = 14;
-  int64 TotalEnergyLimit = 15;
-  int64 TotalEnergyWeight = 16;
+  int64 EntropyUsed = 13;
+  int64 EntropyLimit = 14;
+  int64 TotalEntropyLimit = 15;
+  int64 TotalEntropyWeight = 16;
 
   int64 storageUsed = 21;
   int64 storageLimit = 22;

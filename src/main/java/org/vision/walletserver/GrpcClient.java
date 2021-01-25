@@ -64,7 +64,7 @@ import org.vision.protos.Protocol.TransactionInfo;
 import org.vision.protos.Protocol.TransactionSign;
 import org.vision.protos.contract.SmartContractOuterClass.SmartContractDataWrapper;
 import org.vision.protos.contract.SmartContractOuterClass.TriggerSmartContract;
-import org.vision.protos.contract.SmartContractOuterClass.UpdateEnergyLimitContract;
+import org.vision.protos.contract.SmartContractOuterClass.UpdateEntropyLimitContract;
 import org.vision.protos.contract.SmartContractOuterClass.UpdateSettingContract;
 import org.vision.protos.contract.StorageContract.BuyStorageBytesContract;
 import org.vision.protos.contract.StorageContract.BuyStorageContract;
@@ -606,10 +606,10 @@ public class GrpcClient {
     return Optional.ofNullable(assetIssueList);
   }
 
-  public AccountNetMessage getAccountNet(byte[] address) {
+  public AccountPhotonMessage getAccountPhoton(byte[] address) {
     ByteString addressBS = ByteString.copyFrom(address);
     Account request = Account.newBuilder().setAddress(addressBS).build();
-    return blockingStubFull.getAccountNet(request);
+    return blockingStubFull.getAccountPhoton(request);
   }
 
   public AccountResourceMessage getAccountResource(byte[] address) {
@@ -811,9 +811,9 @@ public class GrpcClient {
     return blockingStubFull.updateSetting(request);
   }
 
-  public TransactionExtention updateEnergyLimit(
-      UpdateEnergyLimitContract request) {
-    return blockingStubFull.updateEnergyLimit(request);
+  public TransactionExtention updateEntropyLimit(
+      UpdateEntropyLimitContract request) {
+    return blockingStubFull.updateEntropyLimit(request);
   }
 
   public TransactionExtention clearContractABI(

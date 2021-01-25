@@ -68,7 +68,7 @@ import org.vision.protos.contract.ProposalContract.ProposalDeleteContract;
 import org.vision.protos.contract.SmartContractOuterClass.ClearABIContract;
 import org.vision.protos.contract.SmartContractOuterClass.CreateSmartContract;
 import org.vision.protos.contract.SmartContractOuterClass.TriggerSmartContract;
-import org.vision.protos.contract.SmartContractOuterClass.UpdateEnergyLimitContract;
+import org.vision.protos.contract.SmartContractOuterClass.UpdateEntropyLimitContract;
 import org.vision.protos.contract.SmartContractOuterClass.UpdateSettingContract;
 import org.vision.protos.contract.StorageContract.UpdateBrokerageContract;
 import org.vision.protos.contract.VoteAssetContractOuterClass.VoteAssetContract;
@@ -534,12 +534,12 @@ public class Utils {
                         JSONObject.parseObject(
                             JsonFormat.printToString(exchangeTransactionContract, selfType));
                     break;
-                  case UpdateEnergyLimitContract:
-                    UpdateEnergyLimitContract updateEnergyLimitContract =
-                        contractParameter.unpack(UpdateEnergyLimitContract.class);
+                  case UpdateEntropyLimitContract:
+                    UpdateEntropyLimitContract updateEntropyLimitContract =
+                        contractParameter.unpack(UpdateEntropyLimitContract.class);
                     contractJson =
                         JSONObject.parseObject(
-                            JsonFormat.printToString(updateEnergyLimitContract, selfType));
+                            JsonFormat.printToString(updateEntropyLimitContract, selfType));
                     break;
                   case AccountPermissionUpdateContract:
                     AccountPermissionUpdateContract accountPermissionUpdateContract =

@@ -16,7 +16,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.spongycastle.util.encoders.Hex;
 import org.vision.api.GrpcAPI;
-import org.vision.api.GrpcAPI.AccountNetMessage;
+import org.vision.api.GrpcAPI.AccountPhotonMessage;
 import org.vision.api.GrpcAPI.AccountResourceMessage;
 import org.vision.api.GrpcAPI.AddressPrKeyPairMessage;
 import org.vision.api.GrpcAPI.AssetIssueList;
@@ -120,7 +120,7 @@ import org.vision.protos.contract.StorageContract.SellStorageContract;
 import org.vision.protos.contract.AssetIssueContractOuterClass.UnfreezeAssetContract;
 import org.vision.protos.contract.BalanceContract.UnfreezeBalanceContract;
 import org.vision.protos.contract.StorageContract.UpdateBrokerageContract;
-import org.vision.protos.contract.SmartContractOuterClass.UpdateEnergyLimitContract;
+import org.vision.protos.contract.SmartContractOuterClass.UpdateEntropyLimitContract;
 import org.vision.protos.contract.SmartContractOuterClass.UpdateSettingContract;
 import org.vision.protos.contract.BalanceContract.WithdrawBalanceContract;
 import org.vision.protos.Protocol.Account;
@@ -1207,8 +1207,8 @@ public class WalletApi {
     return rpcCli.getAssetIssueByAccount(address);
   }
 
-  public static AccountNetMessage getAccountNet(byte[] address) {
-    return rpcCli.getAccountNet(address);
+  public static AccountPhotonMessage getAccountPhoton(byte[] address) {
+    return rpcCli.getAccountPhoton(address);
   }
 
   public static AccountResourceMessage getAccountResource(byte[] address) {
@@ -1857,13 +1857,13 @@ public class WalletApi {
     return builder.build();
   }
 
-  public static UpdateEnergyLimitContract createUpdateEnergyLimitContract(
-      byte[] owner, byte[] contractAddress, long originEnergyLimit) {
+  public static UpdateEntropyLimitContract createUpdateEntropyLimitContract(
+      byte[] owner, byte[] contractAddress, long originEntropyLimit) {
 
-    UpdateEnergyLimitContract.Builder builder = UpdateEnergyLimitContract.newBuilder();
+    UpdateEntropyLimitContract.Builder builder = UpdateEntropyLimitContract.newBuilder();
     builder.setOwnerAddress(ByteString.copyFrom(owner));
     builder.setContractAddress(ByteString.copyFrom(contractAddress));
-    builder.setOriginEnergyLimit(originEnergyLimit);
+    builder.setOriginEntropyLimit(originEntropyLimit);
     return builder.build();
   }
 
@@ -1882,7 +1882,7 @@ public class WalletApi {
       String code,
       long value,
       long consumeUserResourcePercent,
-      long originEnergyLimit,
+      long originEntropyLimit,
       long tokenValue,
       String tokenId,
       String libraryAddressPair,
@@ -1899,7 +1899,7 @@ public class WalletApi {
     builder.setAbi(abi);
     builder
         .setConsumeUserResourcePercent(consumeUserResourcePercent)
-        .setOriginEnergyLimit(originEnergyLimit);
+        .setOriginEntropyLimit(originEntropyLimit);
 
     if (value != 0) {
 
@@ -2025,16 +2025,16 @@ public class WalletApi {
         transactionExtention);
   }
 
-  public boolean updateEnergyLimit(byte[] owner, byte[] contractAddress, long originEnergyLimit)
+  public boolean updateEntropyLimit(byte[] owner, byte[] contractAddress, long originEntropyLimit)
       throws IOException, CipherException, CancelException {
     if (owner == null) {
       owner = getAddress();
     }
 
-    UpdateEnergyLimitContract updateEnergyLimitContract = createUpdateEnergyLimitContract(owner,
-        contractAddress, originEnergyLimit);
+    UpdateEntropyLimitContract updateEntropyLimitContract = createUpdateEntropyLimitContract(owner,
+        contractAddress, originEntropyLimit);
 
-    TransactionExtention transactionExtention = rpcCli.updateEnergyLimit(updateEnergyLimitContract);
+    TransactionExtention transactionExtention = rpcCli.updateEntropyLimit(updateEntropyLimitContract);
     if (transactionExtention == null || !transactionExtention.getResult().getResult()) {
       System.out.println("RPC create trx failed!");
       if (transactionExtention != null) {
@@ -2078,7 +2078,7 @@ public class WalletApi {
       long feeLimit,
       long value,
       long consumeUserResourcePercent,
-      long originEnergyLimit,
+      long originEntropyLimit,
       long tokenValue,
       String tokenId,
       String libraryAddressPair,
@@ -2096,7 +2096,7 @@ public class WalletApi {
             code,
             value,
             consumeUserResourcePercent,
-            originEnergyLimit,
+            originEntropyLimit,
             tokenValue,
             tokenId,
             libraryAddressPair,
