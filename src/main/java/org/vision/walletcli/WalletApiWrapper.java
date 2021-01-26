@@ -214,7 +214,7 @@ public class WalletApiWrapper {
   public boolean assetIssue(byte[] ownerAddress, String name, String abbrName, long totalSupply,
       int vsNum, int icoNum,
       int precision, long startTime, long endTime, int voteScore, String description, String url,
-      long freeNetLimit, long publicFreeNetLimit, HashMap<String, String> frozenSupply)
+      long freePhotonLimit, long publicFreePhotonLimit, HashMap<String, String> frozenSupply)
       throws CipherException, IOException, CancelException {
     if (wallet == null || !wallet.isLoginState()) {
       System.out.println("Warning: assetIssue failed,  Please login first !!");
@@ -265,14 +265,14 @@ public class WalletApiWrapper {
       return false;
     }
 
-    if (freeNetLimit < 0) {
-      System.out.println("freeAssetNetLimit should greater or equal to 0. but really is "
-          + freeNetLimit);
+    if (freePhotonLimit < 0) {
+      System.out.println("freeAssetPhotonLimit should greater or equal to 0. but really is "
+          + freePhotonLimit);
       return false;
     }
-    if (publicFreeNetLimit < 0) {
-      System.out.println("publicFreeAssetNetLimit should greater or equal to 0. but really is "
-          + publicFreeNetLimit);
+    if (publicFreePhotonLimit < 0) {
+      System.out.println("publicFreeAssetPhotonLimit should greater or equal to 0. but really is "
+          + publicFreePhotonLimit);
       return false;
     }
 
@@ -281,8 +281,8 @@ public class WalletApiWrapper {
     builder.setVoteScore(voteScore);
     builder.setDescription(ByteString.copyFrom(description.getBytes()));
     builder.setUrl(ByteString.copyFrom(url.getBytes()));
-    builder.setFreeAssetPhotonLimit(freeNetLimit);
-    builder.setPublicFreeAssetPhotonLimit(publicFreeNetLimit);
+    builder.setFreeAssetPhotonLimit(freePhotonLimit);
+    builder.setPublicFreeAssetPhotonLimit(publicFreePhotonLimit);
 
     for (String daysStr : frozenSupply.keySet()) {
       String amountStr = frozenSupply.get(daysStr);
