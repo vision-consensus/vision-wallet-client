@@ -106,7 +106,7 @@ public class TransactionSignDemo {
     ECKey ecKey = ECKey.fromPrivate(privateBytes);
     byte[] from = ecKey.getAddress();
     byte[] to = WalletApi.decodeFromBase58Check("TGehVcNhud84JDCGrNHKVz9jEAVKUpbuiv");
-    long amount = 100_000_000L; // 100 VS, api only receive vs in Sun, and 1 vs = 1000000 Sun
+    long amount = 100_000_000L; // 100 VS, api only receive vs in Vdt, and 1 vs = 1000000 Vdt
     Transaction transaction = createTransaction(from, to, amount);
     byte[] transactionBytes = transaction.toByteArray();
 
