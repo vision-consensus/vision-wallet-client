@@ -710,7 +710,7 @@ public class WalletApi {
     return rpcCli.easyTransferAssetByPrivate(privateKey, toAddress, assetId, amount);
   }
 
-  public boolean sendCoin(byte[] owner, byte[] to, long amount)
+  public boolean sendVS(byte[] owner, byte[] to, long amount)
       throws CipherException, IOException, CancelException {
     if (owner == null) {
       owner = getAddress();

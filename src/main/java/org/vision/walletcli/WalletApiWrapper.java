@@ -180,14 +180,14 @@ public class WalletApiWrapper {
     return wallet.queryAccount();
   }
 
-  public boolean sendCoin(byte[] ownerAddress, byte[] toAddress, long amount)
+  public boolean sendVS(byte[] ownerAddress, byte[] toAddress, long amount)
       throws CipherException, IOException, CancelException {
     if (wallet == null || !wallet.isLoginState()) {
-      System.out.println("Warning: SendCoin failed,  Please login first !!");
+      System.out.println("Warning: SendVS failed,  Please login first !!");
       return false;
     }
 
-    return wallet.sendCoin(ownerAddress, toAddress, amount);
+    return wallet.sendVS(ownerAddress, toAddress, amount);
   }
 
   public boolean transferAsset(byte[] ownerAddress, byte[] toAddress, String assertName,

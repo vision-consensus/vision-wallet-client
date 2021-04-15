@@ -87,7 +87,7 @@ For more information on a specific command, just type the command on terminal wh
 | [ListProposalsPaginated](#How-to-initiate-a-proposal) | [ListWitnesses](#Some-others) | [LoadShieldedVRC20Wallet](#How-to-transfer-shielded-VRC20-token) | 
 | [Login](#Command-line-operation-flow-example) | [MarketCancelOrder](#How-to-use-vision-dex-to-sell-asset) | [MarketSellAsset](#How-to-use-vision-dex-to-sell-asset)| 
 | [ParticipateAssetIssue](#How-to-issue-VRC10-tokens) | [RegisterWallet](#Wallet-related-commands) | [ResetShieldedVRC20Note](#How-to-transfer-shielded-VRC20-token) | 
-| [ScanShieldedVRC20NoteByIvk](#How-to-transfer-shielded-VRC20-token) |  [ScanShieldedVRC20NoteByOvk](#How-to-transfer-shielded-VRC20-token) |[SendCoin](#How-to-use-the-multi-signature-feature-of-vision-wallet-client) | 
+| [ScanShieldedVRC20NoteByIvk](#How-to-transfer-shielded-VRC20-token) |  [ScanShieldedVRC20NoteByOvk](#How-to-transfer-shielded-VRC20-token) |[SendVS](#How-to-use-the-multi-signature-feature-of-vision-wallet-client) | 
 | [SendShieldedVRC20Coin](#How-to-transfer-shielded-VRC20-token) | [SendShieldedVRC20CoinWithoutAsk](#How-to-transfer-shielded-VRC20-token) | [SetShieldedVRC20ContractAddress](#How-to-transfer-shielded-VRC20-token) | 
 | [ShowShieldedVRC20AddressInfo](#How-to-transfer-shielded-VRC20-token) | [TransferAsset](#How-to-issue-VRC10-tokens) | [TriggerContract](#How-to-use-smart-contracts) |
 | [UnfreezeAsset](#How-to-issue-VRC10-tokens) | [UnfreezeBalance](#How-to-delegate-resource) |[UpdateAsset](#How-to-issue-VRC10-tokens) | 
@@ -738,7 +738,7 @@ If the account is not a witness, it's not necessary to set witness_permission, o
 
 ### Signed transaction
 
-    > SendCoin VFaNHPxTFA88MFw6F2tD8QLr7YrRUIOWFG 10000000000000000
+    > SendVS VFaNHPxTFA88MFw6F2tD8QLr7YrRUIOWFG 10000000000000000
 
 Will show "Please confirm and input your permission id, if input y or Y means default 0, other
 non-numeric characters will cancel transaction."

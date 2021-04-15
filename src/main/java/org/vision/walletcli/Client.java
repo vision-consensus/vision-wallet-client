@@ -171,7 +171,7 @@ public class Client {
       // "ScanNotebyOvk",
       "ScanShieldedVRC20NoteByIvk",
       "ScanShieldedVRC20NoteByOvk",
-      "SendCoin",
+      "SendVS",
       // "SendShieldedCoin",
       // "SendShieldedCoinWithoutAsk",
       "SendShieldedVRC20Coin",
@@ -301,7 +301,7 @@ public class Client {
       // "ScanNotebyOvk",
       "ScanShieldedVRC20NoteByIvk",
       "ScanShieldedVRC20NoteByOvk",
-      "SendCoin",
+      "SendVS",
       // "SendShieldedCoin",
       // "SendShieldedCoinWithoutAsk",
       "SendShieldedVRC20Coin",
@@ -752,10 +752,10 @@ public class Client {
     }
   }
 
-  private void sendCoin(String[] parameters) throws IOException, CipherException, CancelException {
+  private void sendVS(String[] parameters) throws IOException, CipherException, CancelException {
     if (parameters == null || (parameters.length != 2 && parameters.length != 3)) {
-      System.out.println("SendCoin needs 2 parameters like following: ");
-      System.out.println("SendCoin [OwnerAddress] ToAddress Amount");
+      System.out.println("SendVS needs 2 parameters like following: ");
+      System.out.println("SendVS [OwnerAddress] ToAddress Amount");
       return;
     }
 
@@ -779,7 +779,7 @@ public class Client {
     String amountStr = parameters[index++];
     long amount = new Long(amountStr);
 
-    boolean result = walletApiWrapper.sendCoin(ownerAddress, toAddress, amount);
+    boolean result = walletApiWrapper.sendVS(ownerAddress, toAddress, amount);
     if (result) {
       System.out.println("Send " + amount + " Vdt to " + base58ToAddress + " successful !!");
     } else {
@@ -3444,17 +3444,17 @@ public class Client {
     }
   }
 
-  private boolean firstCheck(String[] parameters, String sendCoinType) {
+  private boolean firstCheck(String[] parameters, String sendVSType) {
     if (parameters == null || parameters.length < 6) {
-      System.out.println(sendCoinType + " command needs more than 6 parameters like: ");
-      System.out.println(sendCoinType + " fromPublicAmount shieldedInputNum input1 input2 ... "
+      System.out.println(sendVSType + " command needs more than 6 parameters like: ");
+      System.out.println(sendVSType + " fromPublicAmount shieldedInputNum input1 input2 ... "
           + "publicToAddress toPublicAmount shieldedOutputNum shieldedAddress1 amount1 memo1 "
           + "shieldedAddress2 amount2 memo2 ... ");
       return false;
     }
 
     if (!walletApiWrapper.isLoginState()) {
-      System.out.println(sendCoinType + " failed, please login wallet first !!");
+      System.out.println(sendVSType + " failed, please login wallet first !!");
       return false;
     }
 
@@ -3879,8 +3879,8 @@ public class Client {
               getAssetIssueById(parameters);
               break;
             }
-            case "sendcoin": {
-              sendCoin(parameters);
+            case "sendvs": {
+              sendVS(parameters);
               break;
             }
             case "transferasset": {
