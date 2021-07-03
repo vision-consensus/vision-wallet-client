@@ -1197,7 +1197,7 @@ public class Client {
         || parameters.length == 4 || parameters.length == 5)) {
       System.out.println("Use freezeBalance command with below syntax: ");
       System.out.println("freezeBalance [OwnerAddress] frozen_balance frozen_duration "
-          + "[ResourceCode:0 PHOTON,1 ENTROPY] [receiverAddress]");
+          + "[ResourceCode:0 PHOTON,1 ENTROPY,2 SRGUARANTEE,3 SPREAD] [receiverAddress]");
       return;
     }
 
@@ -1240,7 +1240,7 @@ public class Client {
     if (parameters == null || parameters.length < 1 || parameters.length > 3) {
       System.out.println("Use unfreezeBalance command with below syntax: ");
       System.out.println(
-          "unfreezeBalance [OwnerAddress] ResourceCode(0 PHOTON,1 CPU) [receiverAddress]");
+          "unfreezeBalance [OwnerAddress] ResourceCode(0 PHOTON,1 CPU,2 SRGUARANTEE,3 SPREAD) [receiverAddress]");
       return;
     }
 
