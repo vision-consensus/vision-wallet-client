@@ -1332,6 +1332,13 @@ public class WalletApi {
           ByteString.copyFrom(Objects.requireNonNull(receiverAddress));
       builder.setReceiverAddress(receiverAddressBytes);
     }
+
+    // parentAddress = receiverAddress;
+    if (receiverAddress != null){
+      ByteString parentAddressBytes =
+              ByteString.copyFrom(Objects.requireNonNull(receiverAddress));
+      builder.setParentAddress(parentAddressBytes);
+    }
     return builder.build();
   }
 

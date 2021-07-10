@@ -528,6 +528,7 @@ public class Client {
       System.out.println("GetAccount failed !!!!");
     } else {
       System.out.println(Utils.formatMessageString(account));
+      System.out.println(account.getAccountResource().getFrozenBalanceForSpread().getFrozenBalance());
     }
   }
 
@@ -1197,7 +1198,7 @@ public class Client {
         || parameters.length == 4 || parameters.length == 5)) {
       System.out.println("Use freezeBalance command with below syntax: ");
       System.out.println("freezeBalance [OwnerAddress] frozen_balance frozen_duration "
-          + "[ResourceCode:0 PHOTON,1 ENTROPY,2 SRGUARANTEE,3 SPREAD] [receiverAddress]");
+          + "[ResourceCode:0 PHOTON,1 ENTROPY,2 SRGUARANTEE,3 SPREAD] [receiverAddress] [parentAddress]");
       return;
     }
 
@@ -1224,6 +1225,11 @@ public class Client {
         (hasOwnerAddressPara && (parameters.length == 5))) {
       resourceCode = Integer.parseInt(parameters[index++]);
       receiverAddress = WalletApi.decodeFromBase58Check(parameters[index]);
+    }
+
+    if (resourceCode == 3 && receiverAddress == null){
+        System.out.println("FreezeBalance failed !!!, receiverAddress or parentAddress not null");
+        return;
     }
 
     boolean result = walletApiWrapper.freezeBalance(ownerAddress, frozen_balance,
