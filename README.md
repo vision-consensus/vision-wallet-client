@@ -105,7 +105,7 @@ The rules for the use and calculation of share and photon are described later in
 **Freeze operation is as follows:**
 
 ```console
-> freezeBalance [OwnerAddress] frozen_balance frozen_duration [ResourceCode:0 PHOTON, 1 ENTROPY] [receiverAddress]
+> freezeBalance [OwnerAddress] frozen_balance frozen_duration [ResourceCode:0 PHOTON,1 ENTROPY,3 SPREAD] [receiverAddress] (For SPREAD, receiverAddress is parentAddress, not null)
 ```
 
 OwnerAddress
