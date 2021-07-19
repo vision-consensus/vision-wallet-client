@@ -25,10 +25,7 @@ import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.vision.api.GrpcAPI.*;
 import org.vision.common.crypto.Hash;
-import org.vision.common.utils.AbiUtil;
-import org.vision.common.utils.ByteArray;
-import org.vision.common.utils.ByteUtil;
-import org.vision.common.utils.Utils;
+import org.vision.common.utils.*;
 import org.vision.core.config.JCommanderConfigPath;
 import org.vision.core.exception.CancelException;
 import org.vision.core.exception.CipherException;
@@ -4327,8 +4324,12 @@ public class Client {
   public static void main(String[] args) {
     Client cli = new Client();
     JCommanderConfigPath jCommanderExample = new JCommanderConfigPath();
-    if (args.length>0&&args[0].equals("-c")){
-      args= new String[]{"-c","config-dev.conf"};
+    if (args.length>0 && args[0].equals("-c")){
+      if (args.length > 1 && !Objects.isNull(args[1])){
+        args= new String[]{"-c", args[1]};
+      }else{
+        args= new String[]{"-c", "config-dev.conf"};
+      }
     }else {
       args = new String[]{"-local","config.conf"};
     }
