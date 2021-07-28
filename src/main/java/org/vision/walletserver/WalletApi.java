@@ -1288,6 +1288,13 @@ public class WalletApi {
     }
   }
 
+  public Optional<GrpcAPI.SpreadRelationShipList> getSpreadMintParent(
+          String address,
+          int level)
+          throws CipherException, IOException, CancelException {
+    return rpcCli.getSpreadMintParent(address, level);
+  }
+
   public boolean buyStorage(byte[] ownerAddress, long quantity)
       throws CipherException, IOException, CancelException {
     BuyStorageContract contract = createBuyStorageContract(ownerAddress, quantity);

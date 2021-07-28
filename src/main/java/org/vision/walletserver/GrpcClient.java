@@ -375,6 +375,24 @@ public class GrpcClient {
     return Optional.ofNullable(accountIndex);
   }
 
+  public Optional<SpreadRelationShipList> getSpreadMintParent(String fromAddress, Integer level) {
+
+    ByteString fromAddressBS = ByteString.copyFrom(
+            Objects.requireNonNull(WalletApi.decodeFromBase58Check(fromAddress)));
+
+    SpreadRelationShipMessage request = SpreadRelationShipMessage.newBuilder()
+            .setOwnerAddress(fromAddressBS)
+            .setAddress(fromAddressBS)
+            .setLevel(level)
+            .build();
+    SpreadRelationShipList spreadRelationShip = blockingStubFull.getSpreadMintParent(request);
+//    if (blockingStubSolidity != null) {
+//      spreadRelationShip = blockingStubSolidity.getSpreadMintParent(request);
+//    } else {
+//      spreadRelationShip = blockingStubFull.getSpreadMintParent(request);
+//    }
+    return Optional.ofNullable(spreadRelationShip);
+  }
 
   public Optional<ExchangeList> listExchanges() {
     ExchangeList exchangeList;
