@@ -75,9 +75,11 @@ public class HttpSelfFormatFieldName {
     //FreezeBalanceContract
     AddressFieldNameMap.put("protocol.FreezeBalanceContract.owner_address", 1);
     AddressFieldNameMap.put("protocol.FreezeBalanceContract.receiver_address", 1);
+    AddressFieldNameMap.put("protocol.FreezeBalanceContract.parent_address", 1);
     //UnfreezeBalanceContract
     AddressFieldNameMap.put("protocol.UnfreezeBalanceContract.owner_address", 1);
     AddressFieldNameMap.put("protocol.UnfreezeBalanceContract.receiver_address", 1);
+    AddressFieldNameMap.put("protocol.UnfreezeBalanceContract.parent_address", 1);
     //UnfreezeAssetContract
     AddressFieldNameMap.put("protocol.UnfreezeAssetContract.owner_address", 1);
     //WithdrawBalanceContract
@@ -132,6 +134,9 @@ public class HttpSelfFormatFieldName {
     //DelegatedResource
     AddressFieldNameMap.put("protocol.DelegatedResource.from", 1);
     AddressFieldNameMap.put("protocol.DelegatedResource.to", 1);
+    //SpreadRelationShip
+    AddressFieldNameMap.put("protocol.SpreadRelationShip.owner", 1);
+    AddressFieldNameMap.put("protocol.SpreadRelationShip.parent", 1);
     //Witness
     AddressFieldNameMap.put("protocol.Witness.address", 1);
     //Votes
