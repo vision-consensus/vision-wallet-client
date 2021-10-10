@@ -40,11 +40,11 @@ import org.vision.walletserver.WalletApi;
 @Slf4j
 public class ShieldedVRC20Demo {
 
-  private static String vrc20ContractAddress = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
-  private static String shieldedVRC20ContractAddress = "TQEuSEVRk1GtfExm5q9T8a1w84GvgQJ13V";
+  private static String vrc20ContractAddress = "VR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
+  private static String shieldedVRC20ContractAddress = "VQEuSEVRk1GtfExm5q9T8a1w84GvgQJ13V";
   private static String privateKey =
       "2c8893287a87ac9f4b70af14fbae75e5c898e3b6645e5fed311f5fe60b2dff2f";
-  private static String pubAddress = "TXmiKi5UZ6Pqe22aW5R8LEcNGGpgh2BNMH";
+  private static String pubAddress = "VXmiKi5UZ6Pqe22aW5R8LEcNGGpgh2BNMH";
   private static String spendingKey = "004f74ce2bde08f0c936f2929b94cb2ca49111db95001576f99d04c3e671daf6";
   private static GrpcClient grpcClient = WalletApi.init();
   private static BigInteger scalingFactorBi = getScalingFactorBi();
