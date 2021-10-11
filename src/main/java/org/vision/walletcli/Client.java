@@ -40,6 +40,7 @@ import org.vision.core.zen.ZenUtils;
 import org.vision.core.zen.address.KeyIo;
 import org.vision.core.zen.address.PaymentAddress;
 import org.vision.keystore.StringUtils;
+import org.vision.protos.Protocol;
 import org.vision.protos.Protocol.MarketOrder;
 import org.vision.protos.Protocol.MarketOrderList;
 import org.vision.protos.Protocol.MarketOrderPairList;
@@ -125,6 +126,7 @@ public class Client {
       // "GetShieldedNullifier",
       "GetShieldedPaymentAddress",
       "GetSpendingKey",
+      "GetSpreadMintParent",
       "GetTotalTransaction",
       "GetTransactionApprovedList",
       "GetTransactionById",
@@ -255,6 +257,7 @@ public class Client {
       // "GetShieldedNullifier",
       "GetShieldedPaymentAddress",
       "GetSpendingKey",
+      "GetSpreadMintParent",
       "GetTotalTransaction",
       "GetTransactionApprovedList",
       "GetTransactionById",
@@ -3087,6 +3090,32 @@ public class Client {
     }
   }
 
+  private void getSpreadMintParent(String[] parameters)
+          throws Exception {
+    if (parameters == null || !(parameters.length == 1 || parameters.length == 2)) {
+      System.out.println("Use getSpreadMintParent command with below syntax: ");
+      System.out.println("getSpreadMintParent OwnerAddress [level] (For level, level <= 4 and level >= 1, default 1)");
+      return;
+    }
+
+    int index = 0;
+    String ownerAddress = parameters[index++];
+
+    int level = 1;
+    try {
+      level = Integer.parseInt(parameters[index]);
+    } catch (Exception e){
+      level = 1;
+    }
+    System.out.println("ownerAddress: " + ownerAddress + ", level: " + level);
+
+    Optional<SpreadRelationShipList> result = walletApiWrapper.getSpreadMintParentList(ownerAddress, level);
+    if (result.isPresent()) {
+      System.out.println(Utils.formatMessageString(result.get()));
+    } else {
+      System.out.println("getSpreadMintParent failed !!!");
+    }
+  }
 
   private void create2(String[] parameters) {
     if (parameters == null || parameters.length != 3) {
@@ -4275,6 +4304,10 @@ public class Client {
               getMarketOrderById(parameters);
               break;
             }
+            case "getspreadmintparent": {
+                getSpreadMintParent(parameters);
+                break;
+             }
             case "exit":
             case "quit": {
               System.out.println("Exit !!!");

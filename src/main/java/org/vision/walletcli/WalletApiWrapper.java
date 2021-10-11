@@ -28,6 +28,7 @@ import org.vision.core.zen.address.FullViewingKey;
 import org.vision.core.zen.address.SpendingKey;
 import org.vision.keystore.StringUtils;
 import org.vision.keystore.WalletFile;
+import org.vision.protos.Protocol;
 import org.vision.protos.Protocol.Account;
 import org.vision.protos.Protocol.Block;
 import org.vision.protos.Protocol.ChainParameters;
@@ -479,6 +480,16 @@ public class WalletApiWrapper {
 
     return wallet.freezeBalance(ownerAddress, frozen_balance, frozen_duration, resourceCode,
         receiverAddress);
+  }
+
+  public Optional<SpreadRelationShipList> getSpreadMintParentList(String ownerAddress, int level)
+          throws Exception {
+    if (wallet == null || !wallet.isLoginState()) {
+      System.out.println("Warning: getSpreadMintParent failed, Please login first !!");
+      return Optional.empty();
+    }
+
+    return wallet.getSpreadMintParent(ownerAddress, level);
   }
 
   public boolean buyStorage(byte[] ownerAddress, long quantity)
