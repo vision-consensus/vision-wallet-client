@@ -2590,7 +2590,7 @@ public class WalletApi {
     return processTransactionExtention(transactionExtention);
   }
 
-  public static GrpcAPI.NumberMessage getReward(byte[] owner) {
+  public static GrpcAPI.RewardMessage getReward(byte[] owner) {
     return rpcCli.getReward(owner);
   }
 

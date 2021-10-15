@@ -1229,7 +1229,7 @@ public class WalletApiWrapper {
     return wallet.updateBrokerage(ownerAddress, brokerage);
   }
 
-  public GrpcAPI.NumberMessage getReward(byte[] ownerAddress) {
+  public GrpcAPI.RewardMessage getReward(byte[] ownerAddress) {
     return WalletApi.getReward(ownerAddress);
   }
 

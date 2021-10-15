@@ -502,21 +502,21 @@ service Wallet {
   };
   rpc GetPaginatedProposalList (PaginatedMessage) returns (ProposalList) {
     option (google.api.http) = {
-          post: "/wallet/getpaginatedproposallist"
-          body: "*"
-          additional_bindings {
-            get: "/wallet/getpaginatedproposallist"
-          }
-        };
+      post: "/wallet/getpaginatedproposallist"
+      body: "*"
+      additional_bindings {
+        get: "/wallet/getpaginatedproposallist"
+      }
+    };
   }
   rpc GetProposalById (BytesMessage) returns (Proposal) {
     option (google.api.http) = {
-        post: "/wallet/getproposalbyid"
-        body: "*"
-        additional_bindings {
-          get: "/wallet/getproposalbyid"
-        }
-      };
+      post: "/wallet/getproposalbyid"
+      body: "*"
+      additional_bindings {
+        get: "/wallet/getproposalbyid"
+      }
+    };
   };
 
   rpc ListExchanges (EmptyMessage) returns (ExchangeList) {
@@ -530,50 +530,50 @@ service Wallet {
   };
   rpc GetPaginatedExchangeList (PaginatedMessage) returns (ExchangeList) {
     option (google.api.http) = {
-          post: "/wallet/getpaginatedexchangelist"
-          body: "*"
-          additional_bindings {
-            get: "/wallet/getpaginatedexchangelist"
-          }
-        };
+      post: "/wallet/getpaginatedexchangelist"
+      body: "*"
+      additional_bindings {
+        get: "/wallet/getpaginatedexchangelist"
+      }
+    };
   }
   rpc GetExchangeById (BytesMessage) returns (Exchange) {
     option (google.api.http) = {
-        post: "/wallet/getexchangebyid"
-        body: "*"
-        additional_bindings {
-          get: "/wallet/getexchangebyid"
-        }
-      };
+      post: "/wallet/getexchangebyid"
+      body: "*"
+      additional_bindings {
+        get: "/wallet/getexchangebyid"
+      }
+    };
   };
 
   rpc GetChainParameters (EmptyMessage) returns (ChainParameters) {
     option (google.api.http) = {
-         post: "/wallet/getchainparameters"
-         body: "*"
-         additional_bindings {
-           get: "/wallet/getchainparameters"
-         }
-       };
+      post: "/wallet/getchainparameters"
+      body: "*"
+      additional_bindings {
+        get: "/wallet/getchainparameters"
+      }
+    };
   };
 
   rpc GetAssetIssueList (EmptyMessage) returns (AssetIssueList) {
     option (google.api.http) = {
-        post: "/wallet/getassetissuelist"
-        body: "*"
-        additional_bindings {
-          get: "/wallet/getassetissuelist"
-        }
-      };
+      post: "/wallet/getassetissuelist"
+      body: "*"
+      additional_bindings {
+        get: "/wallet/getassetissuelist"
+      }
+    };
   }
   rpc GetPaginatedAssetIssueList (PaginatedMessage) returns (AssetIssueList) {
     option (google.api.http) = {
-        post: "/wallet/getpaginatedassetissuelist"
-        body: "*"
-        additional_bindings {
-          get: "/wallet/getpaginatedassetissuelist"
-        }
-      };
+      post: "/wallet/getpaginatedassetissuelist"
+      body: "*"
+      additional_bindings {
+        get: "/wallet/getpaginatedassetissuelist"
+      }
+    };
   }
 
 
@@ -693,7 +693,7 @@ service Wallet {
   rpc GetNodeInfo (EmptyMessage) returns (NodeInfo) {
   };
 
-  rpc GetRewardInfo (BytesMessage) returns (NumberMessage) {
+  rpc GetRewardInfo (BytesMessage) returns (RewardMessage) {
   };
 
   rpc GetBrokerageInfo (BytesMessage) returns (NumberMessage) {
@@ -832,12 +832,12 @@ service WalletSolidity {
   }
   rpc GetPaginatedAssetIssueList (PaginatedMessage) returns (AssetIssueList) {
     option (google.api.http) = {
-        post: "/walletsolidity/getpaginatedassetissuelist"
-        body: "*"
-        additional_bindings {
-          get: "/walletsolidity/getpaginatedassetissuelist"
-        }
-      };
+      post: "/walletsolidity/getpaginatedassetissuelist"
+      body: "*"
+      additional_bindings {
+        get: "/walletsolidity/getpaginatedassetissuelist"
+      }
+    };
   }
 
   rpc GetAssetIssueByName (BytesMessage) returns (AssetIssueContract) {
@@ -889,6 +889,7 @@ service WalletSolidity {
   rpc ListExchanges (EmptyMessage) returns (ExchangeList) {
   };
 
+
   rpc GetTransactionById (BytesMessage) returns (Transaction) {
     option (google.api.http) = {
       post: "/walletsolidity/gettransactionbyid"
@@ -908,16 +909,6 @@ service WalletSolidity {
       }
     };
   }
-
-  rpc GetSpreadMintParent (SpreadRelationShipMessage) returns (SpreadRelationShipList) {
-    option (google.api.http) = {
-      post: "/walletsolidity/getspreadmintparent"
-      body: "*"
-      additional_bindings {
-        get: "/walletsolidity/getspreadmintparent"
-      }
-    };
-  };
 
   //Warning: do not invoke this interface provided by others.
   rpc GenerateAddress (EmptyMessage) returns (AddressPrKeyPairMessage) {
@@ -954,7 +945,7 @@ service WalletSolidity {
   rpc IsShieldedVRC20ContractNoteSpent (NfVRC20Parameters) returns (NullifierResult) {
   };
 
-  rpc GetRewardInfo (BytesMessage) returns (NumberMessage) {
+  rpc GetRewardInfo (BytesMessage) returns (RewardMessage) {
   };
 
   rpc GetBrokerageInfo (BytesMessage) returns (NumberMessage) {
@@ -1133,6 +1124,10 @@ message EmptyMessage {
 message NumberMessage {
   int64 num = 1;
 }
+message RewardMessage {
+  int64 reward = 1;
+  int64 spreadReward = 2;
+}
 message BytesMessage {
   bytes value = 1;
 }
@@ -1187,7 +1182,7 @@ message AccountResourceMessage {
   int64 storageUsed = 21;
   int64 storageLimit = 22;
 
-  int64 TotalSRGuaranteeWeight = 27;
+  int64 TotalFVGuaranteeWeight = 27;
   int64 TotalSpreadWeight = 32;
 }
 

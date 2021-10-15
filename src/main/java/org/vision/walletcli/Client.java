@@ -2002,8 +2002,8 @@ public class Client {
       System.out.println("getReward [OwnerAddress]");
       return;
     }
-    NumberMessage reward = walletApiWrapper.getReward(ownerAddress);
-    System.out.println("The reward is : " + reward.getNum());
+    RewardMessage reward = walletApiWrapper.getReward(ownerAddress);
+    System.out.println("The reward is : " + reward.getReward() +  ", spreadReward is : " + reward.getSpreadReward());
   }
 
   private void getBrokerage(String[] parameters) {
