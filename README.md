@@ -106,7 +106,7 @@ The rules for the use and calculation of share and photon are described later in
 **Freeze operation is as follows:**
 
 ```console
-> freezeBalance [OwnerAddress] frozen_balance frozen_duration [ResourceCode:0 PHOTON,1 ENTROPY,3 SPREAD] [receiverAddress] (For SPREAD, receiverAddress is parentAddress, not null)
+> freezeBalance [OwnerAddress] frozen_balance frozen_duration [ResourceCode:0 PHOTON,1 ENTROPY,2 FVGUARANTEE, 3 SPREAD] [receiverAddress] (For SPREAD, receiverAddress is parentAddress, not null)
 ```
 
 OwnerAddress
@@ -137,7 +137,7 @@ After the freezing time expires, funds can be unfroze.
 **Unfreeze operation is as follows:**
 
 ```console
-> unfreezeBalance [OwnerAddress] ResourceCode(0 PHOTON, 1 CPU) [receiverAddress]
+> unfreezeBalance [OwnerAddress] ResourceCode(0 PHOTON,1 ENTROPY,2 FVGUARANTEE, 3 SPREAD) [receiverAddress]
 ```
 
 ## How to vote
