@@ -965,7 +965,7 @@ public class GrpcClient {
     return blockingStubFull.updateBrokerage(request);
   }
 
-  public NumberMessage getReward(byte[] address) {
+  public RewardMessage getReward(byte[] address) {
     BytesMessage bytesMessage = BytesMessage.newBuilder().setValue(ByteString.copyFrom(address))
         .build();
     if (blockingStubSolidity != null) {

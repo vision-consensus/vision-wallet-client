@@ -528,7 +528,6 @@ public class Client {
       System.out.println("GetAccount failed !!!!");
     } else {
       System.out.println(Utils.formatMessageString(account));
-      System.out.println(account.getAccountResource().getFrozenBalanceForSpread().getFrozenBalance());
     }
   }
 
@@ -1198,7 +1197,7 @@ public class Client {
         || parameters.length == 4 || parameters.length == 5)) {
       System.out.println("Use freezeBalance command with below syntax: ");
       System.out.println("freezeBalance [OwnerAddress] frozen_balance frozen_duration "
-          + "[ResourceCode:0 PHOTON,1 ENTROPY,3 SPREAD] [receiverAddress] (For SPREAD, receiverAddress is parentAddress, not null)");
+          + "[ResourceCode:0 PHOTON,1 ENTROPY,2 FVGUARANTEE,3 SPREAD] [receiverAddress] (For SPREAD, receiverAddress is parentAddress, not null)");
       return;
     }
 
@@ -1246,7 +1245,7 @@ public class Client {
     if (parameters == null || parameters.length < 1 || parameters.length > 3) {
       System.out.println("Use unfreezeBalance command with below syntax: ");
       System.out.println(
-          "unfreezeBalance [OwnerAddress] ResourceCode(0 PHOTON,1 CPU) [receiverAddress]");
+          "unfreezeBalance [OwnerAddress] ResourceCode(0 PHOTON,1 ENTROPY, 2 FVGUARANTEE, 3 SPREAD) [receiverAddress]");
       return;
     }
 
@@ -2003,8 +2002,8 @@ public class Client {
       System.out.println("getReward [OwnerAddress]");
       return;
     }
-    NumberMessage reward = walletApiWrapper.getReward(ownerAddress);
-    System.out.println("The reward is : " + reward.getNum());
+    RewardMessage reward = walletApiWrapper.getReward(ownerAddress);
+    System.out.println("The reward is : " + reward.getReward() +  ", spreadReward is : " + reward.getSpreadReward());
   }
 
   private void getBrokerage(String[] parameters) {
