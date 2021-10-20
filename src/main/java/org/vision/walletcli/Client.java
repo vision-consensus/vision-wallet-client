@@ -1317,12 +1317,19 @@ public class Client {
     }
 
     HashMap<Long, Long> parametersMap = new HashMap<>();
+    HashMap<Long, String> parametersStringMap = new HashMap<>();
     while (index < parameters.length) {
       long id = Long.valueOf(parameters[index++]);
-      long value = Long.valueOf(parameters[index++]);
-      parametersMap.put(id, value);
+      if (id == 45 || id == 46){  //  SPREAD_MINT_LEVEL_PROP(45) -- "80,10,8,2" , INFLATION_RATE(46) -- "689,2322"
+        String value = parameters[index++];
+        parametersStringMap.put(id, value);
+      }else{
+        long value = Long.valueOf(parameters[index++]);
+        parametersMap.put(id, value);
+      }
+
     }
-    boolean result = walletApiWrapper.createProposal(ownerAddress, parametersMap);
+    boolean result = walletApiWrapper.createProposal(ownerAddress, parametersMap, parametersStringMap);
     if (result) {
       System.out.println("CreateProposal successful !!");
     } else {
