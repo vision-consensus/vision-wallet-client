@@ -554,14 +554,14 @@ public class WalletApiWrapper {
     return wallet.withdrawBalance(ownerAddress);
   }
 
-  public boolean createProposal(byte[] ownerAddress, HashMap<Long, Long> parametersMap)
+  public boolean createProposal(byte[] ownerAddress, HashMap<Long, Long> parametersMap, HashMap<Long, String> parametersStringMap)
       throws CipherException, IOException, CancelException {
     if (wallet == null || !wallet.isLoginState()) {
       System.out.println("Warning: createProposal failed, Please login first !!");
       return false;
     }
 
-    return wallet.createProposal(ownerAddress, parametersMap);
+    return wallet.createProposal(ownerAddress, parametersMap, parametersStringMap);
   }
 
 
