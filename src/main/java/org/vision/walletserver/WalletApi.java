@@ -1490,14 +1490,14 @@ public class WalletApi {
     return rpcCli.getBlockByLatestNum2(num);
   }
 
-  public boolean createProposal(byte[] owner, HashMap<Long, Long> parametersMap)
+  public boolean createProposal(byte[] owner, HashMap<Long, Long> parametersMap, HashMap<Long, String> parametersStringMap)
       throws CipherException, IOException, CancelException {
     if (owner == null) {
       owner = getAddress();
     }
 
     ProposalCreateContract contract = createProposalCreateContract(owner,
-        parametersMap);
+        parametersMap, parametersStringMap);
     TransactionExtention transactionExtention = rpcCli.proposalCreate(contract);
     return processTransactionExtention(transactionExtention);
   }
@@ -1534,10 +1534,11 @@ public class WalletApi {
   }
 
   public static ProposalCreateContract createProposalCreateContract(
-      byte[] owner, HashMap<Long, Long> parametersMap) {
+      byte[] owner, HashMap<Long, Long> parametersMap, HashMap<Long, String> parametersStringMap) {
     ProposalCreateContract.Builder builder = ProposalCreateContract.newBuilder();
     builder.setOwnerAddress(ByteString.copyFrom(owner));
     builder.putAllParameters(parametersMap);
+    builder.putAllStringParameters(parametersStringMap);
     return builder.build();
   }
 
