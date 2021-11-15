@@ -1253,7 +1253,16 @@ public class Client {
     byte[] ownerAddress = null;
     int resourceCode = 0;
     byte[] receiverAddress = null;
-    if (parameters.length == 2) {
+    if (parameters.length == 1){
+      ownerAddress = getAddressBytes(parameters[index]);
+      if (ownerAddress == null) {
+        resourceCode = Integer.parseInt(parameters[index++]);
+      } else {
+        System.out.println(
+                "unfreezeBalance failed !!!, ResourceCode(0 PHOTON,1 ENTROPY, 2 FVGUARANTEE, 3 SPREAD) not null");
+        return;
+      }
+    } else if (parameters.length == 2) {
       ownerAddress = getAddressBytes(parameters[index]);
       if (ownerAddress != null) {
         index++;
