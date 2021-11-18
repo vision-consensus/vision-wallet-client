@@ -1442,10 +1442,10 @@ public class WalletApi {
     return builder.build();
   }
 
-  public boolean withdrawBalance(byte[] ownerAddress)
+  public boolean withdrawBalance(byte[] ownerAddress, int type)
       throws CipherException, IOException, CancelException {
     WithdrawBalanceContract contract = createWithdrawBalanceContract(
-        ownerAddress);
+        ownerAddress, type);
     if (rpcVersion == 2) {
       TransactionExtention transactionExtention = rpcCli
           .createTransaction2(contract);
@@ -1456,7 +1456,7 @@ public class WalletApi {
     }
   }
 
-  private WithdrawBalanceContract createWithdrawBalanceContract(byte[] address) {
+  private WithdrawBalanceContract createWithdrawBalanceContract(byte[] address, int type) {
     if (address == null) {
       address = getAddress();
     }
@@ -1465,6 +1465,7 @@ public class WalletApi {
         WithdrawBalanceContract.newBuilder();
     ByteString byteAddreess = ByteString.copyFrom(address);
     builder.setOwnerAddress(byteAddreess);
+    builder.setTypeValue(type);
 
     return builder.build();
   }
