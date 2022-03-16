@@ -48,7 +48,6 @@ blockNumberStartToScan = 22690588 // NOTE: this field is optional
      $ cd vision-wallet-client
      $ ./gradlew build
      $ cd build/libs
-     $ java -jar vision-wallet-client.jar -c
      $ java -jar vision-wallet-client.jar -c /data/config.conf
      ```      
 
