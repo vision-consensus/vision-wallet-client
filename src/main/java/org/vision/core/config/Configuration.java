@@ -62,7 +62,7 @@ public class Configuration {
             config = ConfigFactory.parseReader(new InputStreamReader(new FileInputStream(configurationPath)));
             System.out.println("use user defined config file in custom dir");
           } catch (FileNotFoundException e) {
-            System.out.println("load user defined config file exception: " + e.getMessage());
+            System.out.println("load user defined custom config file exception: " + e.getMessage());
           }
         }else{
           config = ConfigFactory.load(configurationPath);
