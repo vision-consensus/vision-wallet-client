@@ -56,8 +56,19 @@ public class Configuration {
           System.out.println("load user defined config file exception: " + e.getMessage());
         }
       }else {
-        config = ConfigFactory.load(configurationPath);
-        System.out.println("user defined config file doesn't exists, use default config file in jar");
+        File configUserFile = new File(configurationPath);
+        if(configUserFile.exists()){
+          try {
+            config = ConfigFactory.parseReader(new InputStreamReader(new FileInputStream(configurationPath)));
+            System.out.println("use user defined config file in custom dir");
+          } catch (FileNotFoundException e) {
+            System.out.println("load user defined config file exception: " + e.getMessage());
+          }
+        }else{
+          config = ConfigFactory.load(configurationPath);
+          System.out.println("user defined config file doesn't exists, use default config file in jar");
+        }
+
       }
     }
     return config;
