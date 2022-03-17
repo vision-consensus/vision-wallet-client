@@ -48,7 +48,6 @@ blockNumberStartToScan = 22690588 // NOTE: this field is optional
      $ cd vision-wallet-client
      $ ./gradlew build
      $ cd build/libs
-     $ java -jar vision-wallet-client.jar -c
      $ java -jar vision-wallet-client.jar -c /data/config.conf
      ```      
 
@@ -62,38 +61,39 @@ We can configure java-vision-core node IP and port in ``src/main/resources/confi
 Following is a list of Vision vision-wallet-client commands:
 For more information on a specific command, just type the command on terminal when you start your Wallet.
 
-| [AddTransactionSign](#How-to-use-the-multi-signature-feature-of-vision-wallet-client) | [ApproveProposal](#Approvecancel-the-proposal)  | [AssetIssue](#How-to-issue-VRC10-tokens) |
-| :---------:|:---------:|:--------: |
-| [BackupShieldedVRC20Wallet](#How-to-transfer-shielded-VRC20-token) | [BackupWallet](#Wallet-related-commands)| [BackupWallet2Base64](#Wallet-related-commands) |
-| [BroadcastTransaction](#Some-others) | [ChangePassword](#Wallet-related-commands)| [CreateProposal](#How-to-initiate-a-proposal) 
-| [DeleteProposal](#Cancel-the-created-proposal) | [DeployContract](#How-to-use-smart-contract) | [ExchangeCreate](#How-to-trade-on-the-exchange) |
-| [ExchangeInject](#How-to-trade-on-the-exchange) | [ExchangeTransaction](#How-to-trade-on-the-exchange) | [ExchangeWithdraw](#How-to-trade-on-the-exchange) |
-| [FreezeBalance](#How-to-delegate-resourcee) | [GenerateAddress](#Account-related-commands) | [GenerateShieldedVRC20Address](#How-to-transfer-shielded-VRC20-token)|
-| [GetAccount](#Account-related-commands) |[GetAccountPhoton](#Account-related-commands) | [GetAccountResource](#Account-related-commands) | 
-| [GetAddress](#Account-related-commands) | [GetAkFromAsk](#How-to-transfer-shielded-VRC20-token) |[GetAssetIssueByAccount](#How-to-issue-VRC10-tokens) | 
-| [GetAssetIssueById](#How-to-issue-VRC10-tokens) | [GetAssetIssueByName](#How-to-issue-VRC10-tokens) |[GetAssetIssueListByName](#How-to-issue-VRC10-tokens) | 
-| [GetBalance](#Account-related-commands) | [GetBlock](#How-to-get-block-information) |[GetBlockById](#How-to-get-block-information) | 
-| [GetBlockByLatestNum](#How-to-get-block-information) | [GetBlockByLimitNext](#How-to-get-block-information) | [GetBrokerage](#Brokerage) | 
-| [GetContract](#How-to-use-smart-contracts) | [GetDelegatedResource](#How-to-delegate-resource) |[GetDelegatedResourceAccountIndex](#How-to-delegate-resource) | 
-| [GetDiversifier](#How-to-transfer-shielded-VRC20-token)| [GetExpandedSpendingKey](#How-to-transfer-shielded-VRC20-token)| [GetIncomingViewingKey](#How-to-transfer-shielded-VRC20-token)  | 
-| [GetMarketOrderByAccount](#How-to-use-vision-dex-to-sell-asset)| [GetMarketOrderById](#How-to-use-vision-dex-to-sell-asset)| [GetMarketOrderListByPair](#How-to-use-vision-dex-to-sell-asset)  | 
-| [GetMarketPairList](#How-to-use-vision-dex-to-sell-asset)| [GetMarketPriceByPair](#How-to-use-vision-dex-to-sell-asset)| [GetNextMaintenanceTime](#Some-others) | 
-| [GetNkFromNsk](#How-to-transfer-shielded-VRC20-token) | [GetProposal](#Get-proposal-information) | [GetShieldedPaymentAddress](#How-to-transfer-shielded-VRC20-token)| 
-| [GetSpendingKey](#How-to-transfer-shielded-VRC20-token) | [GetReward](#Brokerage) |  [GetTransactionApprovedList](#How-to-use-the-multi-signature-feature-of-vision-wallet-client) |
-| [GetTransactionById](#How-to-get-transaction-information) | [GetTransactionCountByBlockNum](#How-to-get-transaction-information) | [GetTransactionInfoByBlockNum](#How-to-get-transaction-information) | 
-| [GetTransactionInfoById](#How-to-get-transaction-information) | [GetTransactionSignWeight](#How-to-use-the-multi-signature-feature-of-vision-wallet-client) | [ImportShieldedVRC20Wallet](#How-to-transfer-shielded-VRC20-token) | 
-| [ImportWallet](#Wallet-related-commands) | [ImportWalletByBase64](#Wallet-related-commands) | [ListAssetIssue](#Get-Token10) | 
-| [ListExchanges](#How-to-trade-on-the-exchange) | [ListExchangesPaginated](#How-to-trade-on-the-exchange) | [ListNodes](#Some-others) | 
-| [ListShieldedVRC20Address](#How-to-transfer-shielded-VRC20-token) | [ListShieldedVRC20Note](#How-to-transfer-shielded-VRC20-token) | [ListProposals](#How-to-initiate-a-proposal) | 
-| [ListProposalsPaginated](#How-to-initiate-a-proposal) | [ListWitnesses](#Some-others) | [LoadShieldedVRC20Wallet](#How-to-transfer-shielded-VRC20-token) | 
-| [Login](#Command-line-operation-flow-example) | [MarketCancelOrder](#How-to-use-vision-dex-to-sell-asset) | [MarketSellAsset](#How-to-use-vision-dex-to-sell-asset)| 
-| [ParticipateAssetIssue](#How-to-issue-VRC10-tokens) | [RegisterWallet](#Wallet-related-commands) | [ResetShieldedVRC20Note](#How-to-transfer-shielded-VRC20-token) | 
-| [ScanShieldedVRC20NoteByIvk](#How-to-transfer-shielded-VRC20-token) |  [ScanShieldedVRC20NoteByOvk](#How-to-transfer-shielded-VRC20-token) |[SendVS](#How-to-use-the-multi-signature-feature-of-vision-wallet-client) | 
-| [SendShieldedVRC20Coin](#How-to-transfer-shielded-VRC20-token) | [SendShieldedVRC20CoinWithoutAsk](#How-to-transfer-shielded-VRC20-token) | [SetShieldedVRC20ContractAddress](#How-to-transfer-shielded-VRC20-token) | 
-| [ShowShieldedVRC20AddressInfo](#How-to-transfer-shielded-VRC20-token) | [TransferAsset](#How-to-issue-VRC10-tokens) | [TriggerContract](#How-to-use-smart-contracts) |
-| [UnfreezeAsset](#How-to-issue-VRC10-tokens) | [UnfreezeBalance](#How-to-delegate-resource) |[UpdateAsset](#How-to-issue-VRC10-tokens) | 
-| [UpdateBrokerage](#Brokerage) | [UpdateEntropyLimit](#How-to-use-smart-contracts) |[UpdateSetting](#How-to-use-smart-contracts) | 
-| [UpdateAccountPermission](#How-to-use-the-multi-signature-feature-of-vision-wallet-client) | [VoteWitness](#How-to-vote) |
+|   [AddTransactionSign](#How-to-use-the-multi-signature-feature-of-vision-wallet-client)    |                       [ApproveProposal](#Approvecancel-the-proposal)                        |                           [AssetIssue](#How-to-issue-VRC10-tokens)    |
+|:------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------:|
+|             [BackupShieldedVRC20Wallet](#How-to-transfer-shielded-VRC20-token)             |                          [BackupWallet](#Wallet-related-commands)                           |                        [BackupWallet2Base64](#Wallet-related-commands) |
+|                            [BroadcastTransaction](#Some-others)                            |                         [ChangePassword](#Wallet-related-commands)                          |                         [CreateProposal](#How-to-initiate-a-proposal) 
+|                       [DeleteProposal](#Cancel-the-created-proposal)                       |                        [DeployContract](#How-to-use-smart-contract)                         |                        [ExchangeCreate](#How-to-trade-on-the-exchange) |
+|                      [ExchangeInject](#How-to-trade-on-the-exchange)                       |                    [ExchangeTransaction](#How-to-trade-on-the-exchange)                     |                       [ExchangeWithdraw](#How-to-trade-on-the-exchange) |
+|                        [FreezeBalance](#How-to-delegate-resourcee)                         |                        [GenerateAddress](#Account-related-commands)                         |             [GenerateShieldedVRC20Address](#How-to-transfer-shielded-VRC20-token) |
+|                          [GetAccount](#Account-related-commands)                           |                        [GetAccountPhoton](#Account-related-commands)                        |                        [GetAccountResource](#Account-related-commands) | 
+|                          [GetAddress](#Account-related-commands)                           |                    [GetAkFromAsk](#How-to-transfer-shielded-VRC20-token)                    |                     [GetAssetIssueByAccount](#How-to-issue-VRC10-tokens) | 
+|                      [GetAssetIssueById](#How-to-issue-VRC10-tokens)                       |                      [GetAssetIssueByName](#How-to-issue-VRC10-tokens)                      |                     [GetAssetIssueListByName](#How-to-issue-VRC10-tokens) | 
+|                          [GetBalance](#Account-related-commands)                           |                          [GetBlock](#How-to-get-block-information)                          |                         [GetBlockById](#How-to-get-block-information) | 
+|                    [GetBlockByLatestNum](#How-to-get-block-information)                    |                    [GetBlockByLimitNext](#How-to-get-block-information)                     |                                  [GetBrokerage](#Brokerage)           | 
+|                         [GetContract](#How-to-use-smart-contracts)                         |                      [GetDelegatedResource](#How-to-delegate-resource)                      |                 [GetDelegatedResourceAccountIndex](#How-to-delegate-resource) | 
+|                  [GetDiversifier](#How-to-transfer-shielded-VRC20-token)                   |               [GetExpandedSpendingKey](#How-to-transfer-shielded-VRC20-token)               |                [GetIncomingViewingKey](#How-to-transfer-shielded-VRC20-token) | 
+|              [GetMarketOrderByAccount](#How-to-use-vision-dex-to-sell-asset)               |                 [GetMarketOrderById](#How-to-use-vision-dex-to-sell-asset)                  |               [GetMarketOrderListByPair](#How-to-use-vision-dex-to-sell-asset) | 
+|                 [GetMarketPairList](#How-to-use-vision-dex-to-sell-asset)                  |                [GetMarketPriceByPair](#How-to-use-vision-dex-to-sell-asset)                 |                            [GetNextMaintenanceTime](#Some-others)     | 
+|                   [GetNkFromNsk](#How-to-transfer-shielded-VRC20-token)                    |                          [GetProposal](#Get-proposal-information)                           |              [GetShieldedPaymentAddress](#How-to-transfer-shielded-VRC20-token) | 
+|                  [GetSpendingKey](#How-to-transfer-shielded-VRC20-token)                   |                                   [GetReward](#Brokerage)                                   | [GetTransactionApprovedList](#How-to-use-the-multi-signature-feature-of-vision-wallet-client) |
+|                 [GetTransactionById](#How-to-get-transaction-information)                  |            [GetTransactionCountByBlockNum](#How-to-get-transaction-information)             |              [GetTransactionInfoByBlockNum](#How-to-get-transaction-information) | 
+|               [GetTransactionInfoById](#How-to-get-transaction-information)                | [GetTransactionSignWeight](#How-to-use-the-multi-signature-feature-of-vision-wallet-client) |              [ImportShieldedVRC20Wallet](#How-to-transfer-shielded-VRC20-token) | 
+|                          [ImportWallet](#Wallet-related-commands)                          |                      [ImportWalletByBase64](#Wallet-related-commands)                       |                                [ListAssetIssue](#Get-Token10)         | 
+|                       [ListExchanges](#How-to-trade-on-the-exchange)                       |                   [ListExchangesPaginated](#How-to-trade-on-the-exchange)                   |                                   [ListNodes](#Some-others)           | 
+|             [ListShieldedVRC20Address](#How-to-transfer-shielded-VRC20-token)              |               [ListShieldedVRC20Note](#How-to-transfer-shielded-VRC20-token)                |                         [ListProposals](#How-to-initiate-a-proposal)  | 
+|                   [ListProposalsPaginated](#How-to-initiate-a-proposal)                    |                                [ListWitnesses](#Some-others)                                |               [LoadShieldedVRC20Wallet](#How-to-transfer-shielded-VRC20-token) | 
+|                       [Login](#Command-line-operation-flow-example)                        |                  [MarketCancelOrder](#How-to-use-vision-dex-to-sell-asset)                  |                    [MarketSellAsset](#How-to-use-vision-dex-to-sell-asset) | 
+|                    [ParticipateAssetIssue](#How-to-issue-VRC10-tokens)                     |                         [RegisterWallet](#Wallet-related-commands)                          |                [ResetShieldedVRC20Note](#How-to-transfer-shielded-VRC20-token) | 
+|            [ScanShieldedVRC20NoteByIvk](#How-to-transfer-shielded-VRC20-token)             |             [ScanShieldedVRC20NoteByOvk](#How-to-transfer-shielded-VRC20-token)             |           [SendVS](#How-to-use-the-multi-signature-feature-of-vision-wallet-client) | 
+|               [SendShieldedVRC20Coin](#How-to-transfer-shielded-VRC20-token)               |          [SendShieldedVRC20CoinWithoutAsk](#How-to-transfer-shielded-VRC20-token)           |           [SetShieldedVRC20ContractAddress](#How-to-transfer-shielded-VRC20-token) | 
+|           [ShowShieldedVRC20AddressInfo](#How-to-transfer-shielded-VRC20-token)            |                         [TransferAsset](#How-to-issue-VRC10-tokens)                         |                        [TriggerContract](#How-to-use-smart-contracts) |
+|                        [UnfreezeAsset](#How-to-issue-VRC10-tokens)                         |                        [UnfreezeBalance](#How-to-delegate-resource)                         |                           [UpdateAsset](#How-to-issue-VRC10-tokens)   | 
+|                               [UpdateBrokerage](#Brokerage)                                |                      [UpdateEntropyLimit](#How-to-use-smart-contracts)                      |                         [UpdateSetting](#How-to-use-smart-contracts)  | 
+| [UpdateAccountPermission](#How-to-use-the-multi-signature-feature-of-vision-wallet-client) |                         [UpdateAccount](#How-to-update-accountname)                         |                          [UpdateWitness](#How-to-update-account-url)  |
+|                                [VoteWitness](#How-to-vote)                                 |
 
 Type any one of the listed commands, to display how-to tips.
 
@@ -175,6 +175,32 @@ View the ratio of brokerage of the witness.
 
 OwnerAddress
 > The address of the witness's account, it is a base58check type address.
+
+
+### UpdateAccount
+
+Update the name of an account
+
+    > UpdateAccount [OwnerAddress] AccountName
+
+OwnerAddress 
+> The address of the account, it is a base58check type address.
+
+AccountName
+> The name you want to set for the account, which is a string of letters and numbers
+
+
+### UpdateWitness
+
+Update the url of a witness account
+
+    > UpdateWitness [OwnerAddress] Url
+
+OwnerAddress
+> The address of the account, it is a base58check type address.
+
+Url
+> The url or profile that you want to set for your witness account
 
 ### GetReward
 
