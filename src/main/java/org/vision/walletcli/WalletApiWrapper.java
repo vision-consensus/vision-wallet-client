@@ -544,14 +544,14 @@ public class WalletApiWrapper {
     return wallet.unfreezeAsset(ownerAddress);
   }
 
-  public boolean withdrawBalance(byte[] ownerAddress)
+  public boolean withdrawBalance(byte[] ownerAddress, int type)
       throws CipherException, IOException, CancelException {
     if (wallet == null || !wallet.isLoginState()) {
       System.out.println("Warning: withdrawBalance failed, Please login first !!");
       return false;
     }
 
-    return wallet.withdrawBalance(ownerAddress);
+    return wallet.withdrawBalance(ownerAddress, type);
   }
 
   public boolean createProposal(byte[] ownerAddress, HashMap<Long, Long> parametersMap, HashMap<Long, String> parametersStringMap)

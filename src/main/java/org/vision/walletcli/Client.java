@@ -1617,17 +1617,27 @@ public class Client {
   private void withdrawBalance(String[] parameters)
       throws IOException, CipherException, CancelException {
     System.out.println("Using withdrawBalance command like: ");
-    System.out.println("withdrawBalance [OwnerAddress] ");
+    System.out.println("withdrawBalance [OwnerAddress] [type: 0 ALL, 1 SPREAD_MINT]");
     byte[] ownerAddress = null;
+    int index = 0;
+    int type = 0;
     if (parameters != null && parameters.length > 0) {
-      ownerAddress = WalletApi.decodeFromBase58Check(parameters[0]);
-      if (ownerAddress == null) {
-        System.out.println("Invalid OwnerAddress.");
-        return;
+      ownerAddress = WalletApi.decodeFromBase58Check(parameters[index]);
+      if (parameters.length == 1){
+        if (ownerAddress == null) {
+          type = Integer.valueOf(parameters[index]);
+        }
+      } else if (parameters.length == 2){
+        if (ownerAddress == null) {
+          System.out.println("Invalid OwnerAddress.");
+          return;
+        }
+        index++;
+        type = Integer.valueOf(parameters[index]);
       }
     }
 
-    boolean result = walletApiWrapper.withdrawBalance(ownerAddress);
+    boolean result = walletApiWrapper.withdrawBalance(ownerAddress, type);
     if (result) {
       System.out.println("WithdrawBalance successful !!!");
     } else {
