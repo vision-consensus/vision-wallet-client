@@ -40,6 +40,7 @@ import org.vision.protos.Protocol.MarketPriceList;
 import org.vision.protos.Protocol.Proposal;
 import org.vision.protos.Protocol.Transaction;
 import org.vision.protos.contract.AssetIssueContractOuterClass.AssetIssueContract;
+import org.vision.protos.contract.BalanceContract;
 import org.vision.protos.contract.ShieldContract.IncrementalMerkleVoucherInfo;
 import org.vision.protos.contract.ShieldContract.OutputPoint;
 import org.vision.protos.contract.ShieldContract.OutputPointInfo;
@@ -471,7 +472,8 @@ public class WalletApiWrapper {
   }
 
   public boolean freezeBalance(byte[] ownerAddress, long frozen_balance, long frozen_duration,
-      int resourceCode, byte[] receiverAddress)
+                               int resourceCode, byte[] receiverAddress,
+                               HashMap<Long, Long> freezeBalanceStages)
       throws CipherException, IOException, CancelException {
     if (wallet == null || !wallet.isLoginState()) {
       System.out.println("Warning: freezeBalance failed, Please login first !!");
@@ -479,7 +481,7 @@ public class WalletApiWrapper {
     }
 
     return wallet.freezeBalance(ownerAddress, frozen_balance, frozen_duration, resourceCode,
-        receiverAddress);
+        receiverAddress, freezeBalanceStages);
   }
 
   public Optional<SpreadRelationShipList> getSpreadMintParentList(String ownerAddress, int level)
@@ -523,14 +525,14 @@ public class WalletApiWrapper {
   }
 
 
-  public boolean unfreezeBalance(byte[] ownerAddress, int resourceCode, byte[] receiverAddress)
+  public boolean unfreezeBalance(byte[] ownerAddress, int resourceCode, byte[] receiverAddress, List<Long> stages)
       throws CipherException, IOException, CancelException {
     if (wallet == null || !wallet.isLoginState()) {
       System.out.println("Warning: unfreezeBalance failed, Please login first !!");
       return false;
     }
 
-    return wallet.unfreezeBalance(ownerAddress, resourceCode, receiverAddress);
+    return wallet.unfreezeBalance(ownerAddress, resourceCode, receiverAddress, stages);
   }
 
 

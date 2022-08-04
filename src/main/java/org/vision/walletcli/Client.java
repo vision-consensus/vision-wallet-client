@@ -87,6 +87,7 @@ public class Client {
       "ExchangeTransaction",
       "ExchangeWithdraw",
       "FreezeBalance",
+      "FreezeStageBalance",
       "GenerateAddress",
       // "GenerateShieldedAddress",
       "GenerateShieldedVRC20Address",
@@ -184,6 +185,7 @@ public class Client {
       "TriggerContract contractAddress method args isHex fee_limit value",
       "UnfreezeAsset",
       "UnfreezeBalance",
+      "UnfreezeStageBalance",
       "UpdateAccount",
       "UpdateAccountPermission",
       "UpdateAsset",
@@ -218,6 +220,7 @@ public class Client {
       "ExchangeTransaction",
       "ExchangeWithdraw",
       "FreezeBalance",
+      "FreezeStageBalance",
       "GenerateAddress",
       // "GenerateShieldedAddress",
       "GenerateShieldedVRC20Address",
@@ -315,6 +318,7 @@ public class Client {
       "TriggerContract",
       "UnfreezeAsset",
       "UnfreezeBalance",
+      "UnfreezeStageBalance",
       "UpdateAccount",
       "UpdateAccountPermission",
       "UpdateAsset",
@@ -1191,13 +1195,50 @@ public class Client {
     return ownerAddress;
   }
 
+  private void freezeStageBalance(String[] parameters) throws IOException, CipherException, CancelException {
+    if (parameters == null ) {
+      System.out.println("Use freezeStageBalance command with below syntax: ");
+      System.out.println("freezeStageBalance [OwnerAddress] frozen_balance frozen_duration "
+              + "[ResourceCode:0 PHOTON,1 ENTROPY] stage freeze_balance .... stageN freezeBalanceN");
+      return;
+    }
+    int index = 0;
+    byte[] ownerAddress = getAddressBytes(parameters[index]);
+    if (ownerAddress != null) {
+      index++;
+    }
+    long frozen_balance = Long.parseLong(parameters[index++]);
+    long frozen_duration = Long.parseLong(parameters[index++]);
+    int resourceCode = Integer.parseInt(parameters[index++]);
+    if (resourceCode != 0 && resourceCode !=1) {
+      System.out.println("freezeStageBalance [OwnerAddress] frozen_balance frozen_duration "
+              + "[ResourceCode:0 PHOTON,1 ENTROPY] stage freeze_balance .... stageN freezeBalanceN");
+      return;
+    }
+    HashMap<Long, Long> freezeStage = new HashMap<Long, Long>();
+    while (index < parameters.length) {
+      Long stage = Long.parseLong(parameters[index++]);
+      Long b = Long.parseLong(parameters[index++]);
+      freezeStage.put(stage, b);
+      freezeStage.put(stage, b);
+    }
+    boolean result = walletApiWrapper.freezeBalance(ownerAddress, frozen_balance,
+            frozen_duration, resourceCode, null, freezeStage);
+    if (result) {
+      System.out.println("FreezeBalance successful !!!");
+    } else {
+      System.out.println("FreezeBalance failed !!!");
+    }
+  }
+
   private void freezeBalance(String[] parameters)
       throws IOException, CipherException, CancelException {
     if (parameters == null || !(parameters.length == 2 || parameters.length == 3
         || parameters.length == 4 || parameters.length == 5)) {
       System.out.println("Use freezeBalance command with below syntax: ");
       System.out.println("freezeBalance [OwnerAddress] frozen_balance frozen_duration "
-          + "[ResourceCode:0 PHOTON,1 ENTROPY,2 FVGUARANTEE,3 SPREAD] [receiverAddress] (For SPREAD, receiverAddress is parentAddress, not null)");
+          + "[ResourceCode:0 PHOTON,1 ENTROPY,2 FVGUARANTEE,3 SPREAD] [receiverAddress] " +
+              "(For SPREAD, receiverAddress is parentAddress, not null)");
       return;
     }
 
@@ -1208,6 +1249,7 @@ public class Client {
       index++;
       hasOwnerAddressPara = true;
     }
+
 
     long frozen_balance = Long.parseLong(parameters[index++]);
     long frozen_duration = Long.parseLong(parameters[index++]);
@@ -1232,7 +1274,7 @@ public class Client {
     }
 
     boolean result = walletApiWrapper.freezeBalance(ownerAddress, frozen_balance,
-        frozen_duration, resourceCode, receiverAddress);
+        frozen_duration, resourceCode, receiverAddress, new HashMap<>());
     if (result) {
       System.out.println("FreezeBalance successful !!!");
     } else {
@@ -1277,7 +1319,38 @@ public class Client {
       receiverAddress = WalletApi.decodeFromBase58Check(parameters[index++]);
     }
 
-    boolean result = walletApiWrapper.unfreezeBalance(ownerAddress, resourceCode, receiverAddress);
+    boolean result = walletApiWrapper.unfreezeBalance(ownerAddress, resourceCode, receiverAddress, new ArrayList<>());
+    if (result) {
+      System.out.println("UnfreezeBalance successful !!!");
+    } else {
+      System.out.println("UnfreezeBalance failed !!!");
+    }
+  }
+
+  private void unfreezeStageBalance(String[] parameters)
+          throws IOException, CipherException, CancelException {
+    if (parameters == null || parameters.length < 1 || parameters.length > 3) {
+      System.out.println("Use unfreezeBalance command with below syntax: ");
+      System.out.println(
+              "unfreezeBalance [OwnerAddress] ResourceCode(0 PHOTON,1 ENTROPY) stage1 stage2 .. stage5");
+      return;
+    }
+
+    int index = 0;
+    byte[] ownerAddress = getAddressBytes(parameters[index]);
+    if (ownerAddress != null) {
+      index++;
+    }
+    int resourceCode = Integer.parseInt(parameters[index++]);
+    if (resourceCode != 0 && resourceCode !=1) {
+      System.out.println("err ResourceCode, freezeStageBalance only support ENTROPY and PHOTON");
+      return;
+    }
+    List<Long> stages = new ArrayList<>();
+    while (index < parameters.length) {
+      stages.add(Long.parseLong(parameters[index++]));
+    }
+    boolean result = walletApiWrapper.unfreezeBalance(ownerAddress, resourceCode, null, stages);
     if (result) {
       System.out.println("UnfreezeBalance successful !!!");
     } else {
@@ -3962,8 +4035,16 @@ public class Client {
               freezeBalance(parameters);
               break;
             }
+            case "freezestagebalance": {
+              freezeStageBalance(parameters);
+              break;
+            }
             case "unfreezebalance": {
               unfreezeBalance(parameters);
+              break;
+            }
+            case "unfreezestagebalance": {
+              unfreezeStageBalance(parameters);
               break;
             }
             case "withdrawbalance": {

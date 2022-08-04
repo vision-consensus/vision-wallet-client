@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.spongycastle.util.encoders.Hex;
+import org.springframework.util.CollectionUtils;
 import org.vision.api.GrpcAPI;
 import org.vision.api.GrpcAPI.AccountPhotonMessage;
 import org.vision.api.GrpcAPI.AccountResourceMessage;
@@ -97,6 +98,7 @@ import org.vision.protos.contract.AssetIssueContractOuterClass.AssetIssueContrac
 import org.vision.protos.contract.AssetIssueContractOuterClass.ParticipateAssetIssueContract;
 import org.vision.protos.contract.AssetIssueContractOuterClass.TransferAssetContract;
 import org.vision.protos.contract.AssetIssueContractOuterClass.UpdateAssetContract;
+import org.vision.protos.contract.BalanceContract;
 import org.vision.protos.contract.BalanceContract.TransferContract;
 import org.vision.protos.contract.ExchangeContract.ExchangeCreateContract;
 import org.vision.protos.contract.ExchangeContract.ExchangeInjectContract;
@@ -1270,15 +1272,16 @@ public class WalletApi {
   }
 
   public boolean freezeBalance(
-      byte[] ownerAddress,
-      long frozen_balance,
-      long frozen_duration,
-      int resourceCode,
-      byte[] receiverAddress)
+          byte[] ownerAddress,
+          long frozen_balance,
+          long frozen_duration,
+          int resourceCode,
+          byte[] receiverAddress,
+          HashMap<Long, Long> freezeBalanceStages)
       throws CipherException, IOException, CancelException {
     FreezeBalanceContract contract =
         createFreezeBalanceContract(
-            ownerAddress, frozen_balance, frozen_duration, resourceCode, receiverAddress);
+            ownerAddress, frozen_balance, frozen_duration, resourceCode, receiverAddress, freezeBalanceStages);
     if (rpcVersion == 2) {
       TransactionExtention transactionExtention = rpcCli.createTransaction2(contract);
       return processTransactionExtention(transactionExtention);
@@ -1317,11 +1320,12 @@ public class WalletApi {
   }
 
   private FreezeBalanceContract createFreezeBalanceContract(
-      byte[] address,
-      long frozen_balance,
-      long frozen_duration,
-      int resourceCode,
-      byte[] receiverAddress) {
+          byte[] address,
+          long frozen_balance,
+          long frozen_duration,
+          int resourceCode,
+          byte[] receiverAddress,
+          HashMap<Long, Long> freezeBalanceStages) {
     if (address == null) {
       address = getAddress();
     }
@@ -1345,6 +1349,15 @@ public class WalletApi {
       ByteString parentAddressBytes =
               ByteString.copyFrom(Objects.requireNonNull(receiverAddress));
       builder.setParentAddress(parentAddressBytes);
+    }
+
+    if (!CollectionUtils.isEmpty(freezeBalanceStages)) {
+      for (Map.Entry<Long, Long> entry : freezeBalanceStages.entrySet()) {
+        BalanceContract.FreezeBalanceStage.Builder stage = BalanceContract.FreezeBalanceStage.newBuilder();
+        stage.setStage(entry.getKey());
+        stage.setFrozenBalance(entry.getValue());
+        builder.addFreezeBalanceStage(stage);
+      }
     }
     return builder.build();
   }
@@ -1385,10 +1398,10 @@ public class WalletApi {
     return builder.build();
   }
 
-  public boolean unfreezeBalance(byte[] ownerAddress, int resourceCode, byte[] receiverAddress)
+  public boolean unfreezeBalance(byte[] ownerAddress, int resourceCode, byte[] receiverAddress, List<Long> stages)
       throws CipherException, IOException, CancelException {
     UnfreezeBalanceContract contract =
-        createUnfreezeBalanceContract(ownerAddress, resourceCode, receiverAddress);
+        createUnfreezeBalanceContract(ownerAddress, resourceCode, receiverAddress, stages);
     if (rpcVersion == 2) {
       TransactionExtention transactionExtention = rpcCli.createTransaction2(contract);
       return processTransactionExtention(transactionExtention);
@@ -1399,7 +1412,7 @@ public class WalletApi {
   }
 
   private UnfreezeBalanceContract createUnfreezeBalanceContract(
-      byte[] address, int resourceCode, byte[] receiverAddress) {
+      byte[] address, int resourceCode, byte[] receiverAddress, List<Long> stages) {
     if (address == null) {
       address = getAddress();
     }
@@ -1408,11 +1421,13 @@ public class WalletApi {
         UnfreezeBalanceContract.newBuilder();
     ByteString byteAddreess = ByteString.copyFrom(address);
     builder.setOwnerAddress(byteAddreess).setResourceValue(resourceCode);
-
     if (receiverAddress != null) {
       ByteString receiverAddressBytes =
           ByteString.copyFrom(Objects.requireNonNull(receiverAddress));
       builder.setReceiverAddress(receiverAddressBytes);
+    }
+    if (!CollectionUtils.isEmpty(stages)) {
+      builder.addAllStages(stages);
     }
 
     return builder.build();

@@ -220,6 +220,7 @@ message Account {
   repeated Permission active_permission = 33;
 
   int64 spread_mint_allowance = 34;
+  int64 frozen_stage_weight_merge = 35;
 }
 
 
