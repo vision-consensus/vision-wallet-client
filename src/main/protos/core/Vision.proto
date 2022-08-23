@@ -238,6 +238,15 @@ message DelegatedResource {
   int64 expire_time_for_entropy = 6;
 }
 
+message AccountFrozenStageResource {
+  bytes address = 1;
+  int64 stage = 2;
+  int64 frozen_balance_for_photon = 3;
+  int64 frozen_balance_for_entropy = 4;
+  int64 expire_time_for_photon = 5;
+  int64 expire_time_for_entropy = 6;
+}
+
 message SpreadRelationShip {
   bytes owner = 1;
   bytes parent = 2;
@@ -628,6 +637,7 @@ message InternalTransaction {
   repeated CallValueInfo callValueInfo = 4;
   bytes note = 5;
   bool rejected = 6;
+  string extra = 7;
 }
 
 message DelegatedResourceAccountIndex {
