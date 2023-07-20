@@ -1398,10 +1398,10 @@ public class WalletApi {
     return builder.build();
   }
 
-  public boolean unfreezeBalance(byte[] ownerAddress, int resourceCode, byte[] receiverAddress, List<Long> stages)
+  public boolean unfreezeBalance(byte[] ownerAddress, int resourceCode, byte[] receiverAddress, List<Long> stages, long unfreezeBalance)
       throws CipherException, IOException, CancelException {
     UnfreezeBalanceContract contract =
-        createUnfreezeBalanceContract(ownerAddress, resourceCode, receiverAddress, stages);
+        createUnfreezeBalanceContract(ownerAddress, resourceCode, receiverAddress, stages, unfreezeBalance);
     if (rpcVersion == 2) {
       TransactionExtention transactionExtention = rpcCli.createTransaction2(contract);
       return processTransactionExtention(transactionExtention);
@@ -1412,7 +1412,7 @@ public class WalletApi {
   }
 
   private UnfreezeBalanceContract createUnfreezeBalanceContract(
-      byte[] address, int resourceCode, byte[] receiverAddress, List<Long> stages) {
+      byte[] address, int resourceCode, byte[] receiverAddress, List<Long> stages, long unfreezeBalance) {
     if (address == null) {
       address = getAddress();
     }
@@ -1428,6 +1428,9 @@ public class WalletApi {
     }
     if (!CollectionUtils.isEmpty(stages)) {
       builder.addAllStages(stages);
+      if (receiverAddress == null && unfreezeBalance > 0) {
+        builder.setUnfreezeBalance(unfreezeBalance);
+      }
     }
 
     return builder.build();

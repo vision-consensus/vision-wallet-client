@@ -1319,7 +1319,7 @@ public class Client {
       receiverAddress = WalletApi.decodeFromBase58Check(parameters[index++]);
     }
 
-    boolean result = walletApiWrapper.unfreezeBalance(ownerAddress, resourceCode, receiverAddress, new ArrayList<>());
+    boolean result = walletApiWrapper.unfreezeBalance(ownerAddress, resourceCode, receiverAddress, new ArrayList<>(), 0);
     if (result) {
       System.out.println("UnfreezeBalance successful !!!");
     } else {
@@ -1329,7 +1329,7 @@ public class Client {
 
   private void unfreezeStageBalance(String[] parameters)
           throws IOException, CipherException, CancelException {
-    if (parameters == null || parameters.length < 1 || parameters.length > 3) {
+    if (parameters == null || parameters.length < 1 || parameters.length > 4) {
       System.out.println("Use unfreezeBalance command with below syntax: ");
       System.out.println(
               "unfreezeBalance [OwnerAddress] ResourceCode(0 PHOTON,1 ENTROPY) stage1 stage2 .. stage5");
@@ -1346,11 +1346,16 @@ public class Client {
       System.out.println("err ResourceCode, freezeStageBalance only support ENTROPY and PHOTON");
       return;
     }
+    long unfreezeBalance = Long.parseLong(parameters[index++]);
+    if (unfreezeBalance < 0) {
+      System.out.println("err unfreezeBalance, unfreezeBalance must be positive");
+      return;
+    }
     List<Long> stages = new ArrayList<>();
     while (index < parameters.length) {
       stages.add(Long.parseLong(parameters[index++]));
     }
-    boolean result = walletApiWrapper.unfreezeBalance(ownerAddress, resourceCode, null, stages);
+    boolean result = walletApiWrapper.unfreezeBalance(ownerAddress, resourceCode, null, stages, unfreezeBalance);
     if (result) {
       System.out.println("UnfreezeBalance successful !!!");
     } else {

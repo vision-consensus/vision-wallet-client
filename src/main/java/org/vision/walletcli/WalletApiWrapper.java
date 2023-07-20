@@ -525,14 +525,14 @@ public class WalletApiWrapper {
   }
 
 
-  public boolean unfreezeBalance(byte[] ownerAddress, int resourceCode, byte[] receiverAddress, List<Long> stages)
+  public boolean unfreezeBalance(byte[] ownerAddress, int resourceCode, byte[] receiverAddress, List<Long> stages, long unfreezeBalance)
       throws CipherException, IOException, CancelException {
     if (wallet == null || !wallet.isLoginState()) {
       System.out.println("Warning: unfreezeBalance failed, Please login first !!");
       return false;
     }
 
-    return wallet.unfreezeBalance(ownerAddress, resourceCode, receiverAddress, stages);
+    return wallet.unfreezeBalance(ownerAddress, resourceCode, receiverAddress, stages, unfreezeBalance);
   }
 
 
